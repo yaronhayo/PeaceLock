@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { sendEmail, getCustomerConfirmationTemplate, getLeadNotificationTemplate } from '../server/sendgrid';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Enable CORS
@@ -38,9 +39,67 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       console.log('Simple booking created:', booking);
 
+      // Prepare data for email templates
+      const emailData = {
+        customerName: `${firstName} ${lastName}`,
+        email: req.body.email || 'noreply@peaceandlockgarage.com', // Use provided email or fallback
+        phone: phone,
+        serviceType: serviceType,
+        urgency: req.body.urgency || 'normal',
+        address: req.body.address || 'TBD',
+        description: req.body.description || 'No description provided',
+        submittedAt: new Date()
+      };
+
+      // Send emails asynchronously (don't block the response)
+      const emailPromises = [];
+
+      // Only send customer confirmation if email is provided
+      if (req.body.email && req.body.email.trim() !== '') {
+        console.log('Sending customer confirmation email to:', req.body.email);
+        emailPromises.push(
+          sendEmail({
+            to: req.body.email,
+            from: 'noreply@peaceandlockgarage.com',
+            subject: 'Service Request Confirmation - Peace & Lock',
+            html: getCustomerConfirmationTemplate(emailData)
+          })
+        );
+      }
+
+      // Always send team notification
+      console.log('Sending team notification email');
+      emailPromises.push(
+        sendEmail({
+          to: 'peaceandlockgarage@gmail.com',
+          from: 'team@peaceandlockgarage.com',
+          replyTo: req.body.email && req.body.email.trim() !== '' ? req.body.email : 'noreply@peaceandlockgarage.com',
+          subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
+          html: getLeadNotificationTemplate(emailData)
+        })
+      );
+
+      Promise.allSettled(emailPromises).then(results => {
+        results.forEach((result, index) => {
+          if (result.status === 'fulfilled') {
+            if (req.body.email && req.body.email.trim() !== '' && index === 0) {
+              console.log('Customer confirmation email sent successfully');
+            } else if ((req.body.email && req.body.email.trim() !== '' && index === 1) || (!req.body.email && index === 0)) {
+              console.log('Team notification email sent successfully');
+            }
+          } else {
+            if (req.body.email && req.body.email.trim() !== '' && index === 0) {
+              console.error('Failed to send customer confirmation email:', result.reason);
+            } else {
+              console.error('Failed to send team notification email:', result.reason);
+            }
+          }
+        });
+      });
+
       res.status(200).json({
         success: true,
-        message: "Booking submitted successfully (simplified)!",
+        message: "Booking submitted successfully! You should receive a confirmation email shortly.",
         bookingId: booking.id
       });
 

@@ -37,13 +37,19 @@ export default function Hero() {
     setIsSubmitting(true);
 
     try {
-      // Convert hero form data to booking format (simplified for testing)
+      // Convert hero form data to booking format
       const [firstName, ...lastNameParts] = formData.name.split(' ');
       const bookingData = {
         firstName: firstName || '',
         lastName: lastNameParts.join(' ') || 'N/A',
         phone: formData.phone,
-        serviceType: formData.serviceType
+        serviceType: formData.serviceType,
+        urgency: 'normal',
+        address: 'TBD', // Will be collected later
+        city: 'TBD',
+        zipCode: 'TBD',
+        description: formData.description || 'No description provided'
+        // Note: Hero form doesn't collect email, so team notification only
       };
 
       console.log('Hero form submitting:', bookingData);

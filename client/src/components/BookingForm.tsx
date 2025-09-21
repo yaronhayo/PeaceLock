@@ -62,22 +62,28 @@ export default function BookingForm() {
     setIsSubmitting(true);
 
     try {
-      // Simplified for testing - only send required fields
-      const simplifiedData = {
+      // Send required fields plus email for confirmation
+      const submitData = {
         firstName: formData.firstName,
         lastName: formData.lastName,
         phone: formData.phone,
-        serviceType: formData.serviceType
+        email: formData.email, // Include email for customer confirmation
+        serviceType: formData.serviceType,
+        urgency: formData.urgency,
+        address: formData.address,
+        city: formData.city,
+        zipCode: formData.zipCode,
+        description: formData.description
       };
 
-      console.log('Booking form submitting:', simplifiedData);
+      console.log('Booking form submitting:', submitData);
 
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(simplifiedData),
+        body: JSON.stringify(submitData),
       });
 
       if (!response.ok) {
