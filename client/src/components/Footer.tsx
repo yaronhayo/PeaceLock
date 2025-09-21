@@ -154,7 +154,7 @@ export default function Footer() {
                 <p>Monday - Friday: 7:00 AM - 7:00 PM</p>
                 <p>Saturday: 8:00 AM - 5:00 PM</p>
                 <p>Sunday: 9:00 AM - 3:00 PM</p>
-                <p className="text-primary font-medium">24/7 Emergency Service Available</p>
+                <p className="text-primary font-medium">Emergency Service Available</p>
               </div>
             </div>
             

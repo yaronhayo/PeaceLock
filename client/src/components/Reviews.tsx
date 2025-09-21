@@ -8,7 +8,7 @@ const reviews = [
     name: "Michael Rodriguez",
     initials: "MR",
     rating: 5,
-    review: "Outstanding service! My garage door spring broke on a Sunday and they had someone out within 2 hours. Professional, fair pricing, and excellent workmanship. Highly recommend Peace & Lock!",
+    review: "Outstanding service! My garage door spring broke on a Sunday and they responded quickly. Professional, reliable service, and excellent workmanship. Highly recommend Peace & Lock!",
     service: "Emergency Spring Repair",
     location: "Bergen County"
   },
@@ -24,7 +24,7 @@ const reviews = [
     name: "David Thompson",
     initials: "DT",
     rating: 5,
-    review: "Called them for a garage door that wouldn't close properly. The technician diagnosed the issue quickly, explained everything clearly, and fixed it at a reasonable price. Great customer service!",
+    review: "Called them for a garage door that wouldn't close properly. The technician diagnosed the issue quickly, explained everything clearly, and fixed it professionally. Great customer service!",
     service: "Door Repair",
     location: "Essex County"
   },
@@ -76,7 +76,7 @@ export default function Reviews() {
             What Our Customers Say
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Don't just take our word for it. See why hundreds of New Jersey homeowners 
+            Don't just take our word for it. See why New Jersey homeowners 
             and businesses trust Peace & Lock for their garage door needs.
           </p>
         </div>
@@ -122,22 +122,22 @@ export default function Reviews() {
                   <div className="flex justify-center mb-2">
                     <StarRating rating={5} />
                   </div>
-                  <div className="text-3xl font-bold text-secondary mb-2">4.9/5</div>
-                  <p className="text-muted-foreground">Average Rating</p>
+                  <div className="text-3xl font-bold text-secondary mb-2">⭐⭐⭐⭐⭐</div>
+                  <p className="text-muted-foreground">Excellent Reviews</p>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-secondary mb-2">500+</div>
-                  <p className="text-muted-foreground">Happy Customers</p>
+                  <div className="text-3xl font-bold text-secondary mb-2">Licensed</div>
+                  <p className="text-muted-foreground">NJ Professional</p>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-secondary mb-2">98%</div>
-                  <p className="text-muted-foreground">Would Recommend</p>
+                  <div className="text-3xl font-bold text-secondary mb-2">15+</div>
+                  <p className="text-muted-foreground">Years Experience</p>
                 </div>
               </div>
               
               <div className="mt-6 pt-6 border-t">
                 <p className="text-muted-foreground mb-4">
-                  Ready to experience the Peace & Lock difference? Join hundreds of satisfied customers!
+                  Ready to experience the Peace & Lock difference? Join satisfied New Jersey customers!
                 </p>
                 <button 
                   onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}

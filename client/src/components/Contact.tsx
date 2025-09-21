@@ -30,7 +30,7 @@ export default function Contact() {
       subject: '',
       message: ''
     });
-    alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+    alert('Thank you for your message! We\'ll get back to you as soon as possible.');
   };
 
   return (
@@ -57,7 +57,7 @@ export default function Contact() {
                   <div>
                     <h4 className="font-semibold mb-1">Phone</h4>
                     <p className="text-muted-foreground">(201) 431-3480</p>
-                    <p className="text-sm text-muted-foreground">24/7 Emergency Service Available</p>
+                    <p className="text-sm text-muted-foreground">Emergency Service Available</p>
                   </div>
                 </div>
 
@@ -66,7 +66,7 @@ export default function Contact() {
                   <div>
                     <h4 className="font-semibold mb-1">Email</h4>
                     <p className="text-muted-foreground">support@peaceandlocknj.com</p>
-                    <p className="text-sm text-muted-foreground">Response within 24 hours</p>
+                    <p className="text-sm text-muted-foreground">Timely response</p>
                   </div>
                 </div>
 
@@ -87,7 +87,7 @@ export default function Contact() {
                       <p>Monday - Friday: 7:00 AM - 7:00 PM</p>
                       <p>Saturday: 8:00 AM - 5:00 PM</p>
                       <p>Sunday: 9:00 AM - 3:00 PM</p>
-                      <p className="text-sm text-primary">Emergency service available 24/7</p>
+                      <p className="text-sm text-primary">Emergency service available</p>
                     </div>
                   </div>
                 </div>
@@ -98,8 +98,8 @@ export default function Contact() {
               <CardContent className="p-6">
                 <h4 className="font-semibold mb-3">Emergency Service</h4>
                 <p className="text-muted-foreground text-sm mb-4">
-                  Garage door emergency? Don't wait - call us now for immediate assistance. 
-                  We respond to emergencies 24/7 throughout our service area.
+                  Garage door emergency? Don't wait - call us now for prompt assistance. 
+                  We respond to emergencies throughout our service area.
                 </p>
                 <Button 
                   variant="secondary"
@@ -120,7 +120,7 @@ export default function Contact() {
               <CardHeader>
                 <CardTitle className="text-xl">Send Us a Message</CardTitle>
                 <p className="text-muted-foreground">
-                  Fill out the form below and we'll get back to you within 24 hours.
+                  Fill out the form below and we'll get back to you promptly.
                 </p>
               </CardHeader>
               <CardContent>

@@ -5,45 +5,45 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const services = [
   {
     icon: Wrench,
-    title: "Garage Door Repair",
-    description: "Expert repair for broken springs, cables, tracks, and panels. We fix all brands and models with same-day service.",
+    title: "Garage Door Spring Repair",
+    description: "Expert repair for broken garage door springs, cables, tracks, and panels. We fix all brands and models with professional service.",
     features: ["Spring replacement", "Cable repair", "Track alignment", "Panel fixes"],
-    price: "Starting at $89"
+    emergency: "Emergency repairs available"
   },
   {
     icon: DoorOpen,
-    title: "New Installation",
-    description: "Professional installation of residential and commercial garage doors. Choose from hundreds of styles and materials.",
+    title: "Garage Door Installation",
+    description: "Professional installation of residential and commercial garage doors. Choose from a wide range of styles and materials.",
     features: ["Residential doors", "Commercial doors", "Custom designs", "All materials"],
-    price: "Free estimates"
+    contact: "Consultation available"
   },
   {
     icon: Zap,
-    title: "Opener Service",
+    title: "Garage Door Opener Repair",
     description: "Installation, repair, and maintenance of garage door openers. Smart opener upgrades available.",
     features: ["Opener installation", "Motor repair", "Smart upgrades", "Remote programming"],
-    price: "Starting at $129"
+    service: "Professional service"
   },
   {
     icon: Shield,
-    title: "Emergency Service",
-    description: "24/7 emergency garage door repair service. Stuck door? Broken spring? We'll get you moving again.",
-    features: ["24/7 availability", "Same-day service", "Emergency repairs", "Security solutions"],
-    price: "Call for pricing"
+    title: "Emergency Garage Door Repair",
+    description: "Emergency garage door repair service. Stuck door? Broken spring? We'll get you moving again.",
+    features: ["Emergency availability", "Professional service", "Emergency repairs", "Security solutions"],
+    service: "Available when needed"
   },
   {
     icon: Clock,
-    title: "Maintenance",
+    title: "Garage Door Maintenance",
     description: "Preventive maintenance to keep your garage door running smoothly. Extend the life of your door and opener.",
     features: ["Safety inspections", "Lubrication service", "Spring adjustment", "Preventive care"],
-    price: "Starting at $69"
+    service: "Professional maintenance"
   },
   {
     icon: Phone,
-    title: "Free Consultation",
-    description: "Not sure what you need? Our experts provide free consultations and estimates for all garage door needs.",
-    features: ["Expert assessment", "Written estimates", "Product recommendations", "No obligations"],
-    price: "Always free"
+    title: "Garage Door Consultation",
+    description: "Not sure what you need? Our experts provide consultations for all garage door needs.",
+    features: ["Expert assessment", "Professional evaluation", "Product recommendations", "No obligations"],
+    service: "Consultation available"
   }
 ];
 
@@ -57,11 +57,11 @@ export default function Services() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-foreground mb-4">
-            Our Garage Door Services
+            New Jersey Garage Door Repair & Installation Services
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            From emergency repairs to new installations, our licensed technicians 
-            provide comprehensive garage door services throughout New Jersey.
+            From emergency garage door spring repair to new garage door installation, our licensed technicians 
+            provide comprehensive garage door opener repair and broken garage door solutions throughout New Jersey.
           </p>
         </div>
 
@@ -75,7 +75,7 @@ export default function Services() {
                     <IconComponent className="w-8 h-8 text-primary" />
                   </div>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
-                  <p className="text-lg font-semibold text-primary">{service.price}</p>
+                  <p className="text-lg font-semibold text-primary">{service.service || service.emergency || service.contact}</p>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground">{service.description}</p>
@@ -124,12 +124,12 @@ export default function Services() {
                   <p className="text-muted-foreground">Years Experience</p>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-primary mb-2">500+</div>
-                  <p className="text-muted-foreground">Happy Customers</p>
+                  <div className="text-3xl font-bold text-primary mb-2">Licensed</div>
+                  <p className="text-muted-foreground">& Insured</p>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-primary mb-2">24/7</div>
-                  <p className="text-muted-foreground">Emergency Service</p>
+                  <div className="text-3xl font-bold text-primary mb-2">Emergency</div>
+                  <p className="text-muted-foreground">Service Available</p>
                 </div>
               </div>
             </CardContent>

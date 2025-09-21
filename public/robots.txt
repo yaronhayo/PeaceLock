@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://peaceandlocknj.com/sitemap.xml
+
+# Block access to sensitive files
+Disallow: /api/
+Disallow: /private/
+Disallow: /.env
+Disallow: /node_modules/
+
+# Allow crawling of important pages
+Allow: /#services
+Allow: /#garage-door-repair
+Allow: /#garage-door-installation
+Allow: /#emergency-garage-door-repair
+Allow: /#faq
+Allow: /#about
+Allow: /#contact
+Allow: /#booking
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1

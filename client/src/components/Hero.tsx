@@ -23,14 +23,14 @@ export default function Hero() {
           {/* Hero Content */}
           <div className="text-center lg:text-left">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              Fast, Reliable
-              <span className="text-primary block">Garage Door</span>
-              <span className="text-secondary block">Repair & Installation</span>
+              Garage Door Repair Near Me
+              <span className="text-primary block">Emergency Service</span>
+              <span className="text-secondary block">New Jersey Licensed</span>
             </h1>
             
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl">
-              New Jersey's trusted garage door experts. Licensed professionals providing 
-              same-day service, emergency repairs, and quality installations since 2015.
+              New Jersey's trusted garage door spring repair & installation experts. Licensed professionals providing 
+              emergency garage door repair, opener installation, and broken garage door service since 2009.
             </p>
 
             {/* Trust Indicators */}
@@ -41,7 +41,7 @@ export default function Hero() {
               </div>
               <div className="flex items-center text-sm text-muted-foreground">
                 <Clock className="w-4 h-4 mr-2 text-secondary" />
-                Same-Day Service
+                Professional Service
               </div>
               <div className="flex items-center text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4 mr-2 text-secondary" />
@@ -73,7 +73,7 @@ export default function Hero() {
             </div>
 
             <p className="text-sm text-muted-foreground mt-4">
-              ⭐ 4.9/5 stars • 500+ satisfied customers • Free estimates
+              Licensed & Insured • Local NJ Experts • Trusted Technicians
             </p>
           </div>
 
@@ -82,7 +82,7 @@ export default function Hero() {
             <Card className="bg-card/95 backdrop-blur">
               <CardContent className="p-6">
                 <h3 className="text-2xl font-semibold mb-4 text-center">
-                  Get Your Free Estimate
+                  Request Your Estimate
                 </h3>
                 <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); console.log('Form submitted'); }}>
                   <div>
@@ -127,11 +127,11 @@ export default function Hero() {
                     className="w-full text-lg py-3"
                     data-testid="button-submit-estimate"
                   >
-                    Get Free Estimate
+                    Request Estimate
                   </Button>
                 </form>
                 <p className="text-xs text-muted-foreground text-center mt-3">
-                  Response within 30 minutes during business hours
+                  Prompt response during business hours
                 </p>
               </CardContent>
             </Card>

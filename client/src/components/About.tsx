@@ -16,8 +16,8 @@ const highlights = [
   },
   {
     icon: Users,
-    title: "500+ Happy Customers",
-    description: "Hundreds of satisfied customers trust us for reliable, professional service."
+    title: "Trusted by NJ Homeowners",
+    description: "New Jersey families and businesses trust us for reliable, professional service."
   },
   {
     icon: Award,
@@ -59,8 +59,8 @@ export default function About() {
                 to earning and maintaining that trust.
               </p>
               <p>
-                Today, we're proud to serve over 500 satisfied customers across six 
-                New Jersey counties, with the same dedication to quality and customer 
+                Today, we're proud to serve New Jersey homeowners and businesses across six 
+                counties, with the same dedication to quality and customer 
                 service that started it all.
               </p>
             </div>
@@ -78,11 +78,11 @@ export default function About() {
                 </li>
                 <li className="flex items-start">
                   <Clock className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
-                  <span className="text-muted-foreground">24/7 emergency service and same-day appointments</span>
+                  <span className="text-muted-foreground">Emergency service available when you need it most</span>
                 </li>
                 <li className="flex items-start">
                   <Phone className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
-                  <span className="text-muted-foreground">Upfront pricing with no hidden fees or surprise charges</span>
+                  <span className="text-muted-foreground">Clear communication and professional service standards</span>
                 </li>
               </ul>
             </div>
@@ -139,8 +139,8 @@ export default function About() {
                 Ready to Experience the Peace & Lock Difference?
               </h3>
               <p className="text-muted-foreground mb-6">
-                Join hundreds of satisfied customers who trust us for their garage door needs. 
-                Get your free estimate today!
+                Join New Jersey homeowners and businesses who trust us for their garage door needs. 
+                Request your estimate today!
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button 
@@ -148,7 +148,7 @@ export default function About() {
                   onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
                   data-testid="about-book-button"
                 >
-                  Book Free Estimate
+                  Request Estimate
                 </Button>
                 <Button 
                   variant="secondary" 
