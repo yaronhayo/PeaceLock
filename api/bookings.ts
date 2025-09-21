@@ -2,6 +2,8 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { sendEmail, getCustomerConfirmationTemplate, getLeadNotificationTemplate } from '../server/sendgrid';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  console.log('API handler starting...');
+
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -9,11 +11,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
   if (req.method === 'OPTIONS') {
+    console.log('OPTIONS request received');
     res.status(200).end();
     return;
   }
 
   if (req.method === 'POST') {
+    console.log('POST request received');
     try {
       console.log('Simple booking API received:', req.body);
 
@@ -52,50 +56,59 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       };
 
       // Send emails asynchronously (don't block the response)
-      const emailPromises = [];
+      console.log('Starting email sending process...');
+      try {
+        const emailPromises = [];
 
-      // Only send customer confirmation if email is provided
-      if (req.body.email && req.body.email.trim() !== '') {
-        console.log('Sending customer confirmation email to:', req.body.email);
+        // Only send customer confirmation if email is provided
+        if (req.body.email && req.body.email.trim() !== '') {
+          console.log('Preparing customer confirmation email to:', req.body.email);
+          emailPromises.push(
+            sendEmail({
+              to: req.body.email,
+              from: 'noreply@peaceandlockgarage.com',
+              subject: 'Service Request Confirmation - Peace & Lock',
+              html: getCustomerConfirmationTemplate(emailData)
+            })
+          );
+        }
+
+        // Always send team notification
+        console.log('Preparing team notification email');
         emailPromises.push(
           sendEmail({
-            to: req.body.email,
-            from: 'noreply@peaceandlockgarage.com',
-            subject: 'Service Request Confirmation - Peace & Lock',
-            html: getCustomerConfirmationTemplate(emailData)
+            to: 'peaceandlockgarage@gmail.com',
+            from: 'team@peaceandlockgarage.com',
+            replyTo: req.body.email && req.body.email.trim() !== '' ? req.body.email : 'noreply@peaceandlockgarage.com',
+            subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
+            html: getLeadNotificationTemplate(emailData)
           })
         );
-      }
 
-      // Always send team notification
-      console.log('Sending team notification email');
-      emailPromises.push(
-        sendEmail({
-          to: 'peaceandlockgarage@gmail.com',
-          from: 'team@peaceandlockgarage.com',
-          replyTo: req.body.email && req.body.email.trim() !== '' ? req.body.email : 'noreply@peaceandlockgarage.com',
-          subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
-          html: getLeadNotificationTemplate(emailData)
-        })
-      );
-
-      Promise.allSettled(emailPromises).then(results => {
-        results.forEach((result, index) => {
-          if (result.status === 'fulfilled') {
-            if (req.body.email && req.body.email.trim() !== '' && index === 0) {
-              console.log('Customer confirmation email sent successfully');
-            } else if ((req.body.email && req.body.email.trim() !== '' && index === 1) || (!req.body.email && index === 0)) {
-              console.log('Team notification email sent successfully');
-            }
-          } else {
-            if (req.body.email && req.body.email.trim() !== '' && index === 0) {
-              console.error('Failed to send customer confirmation email:', result.reason);
+        Promise.allSettled(emailPromises).then(results => {
+          console.log('Email sending results:', results.length, 'promises resolved');
+          results.forEach((result, index) => {
+            if (result.status === 'fulfilled') {
+              if (req.body.email && req.body.email.trim() !== '' && index === 0) {
+                console.log('Customer confirmation email sent successfully');
+              } else if ((req.body.email && req.body.email.trim() !== '' && index === 1) || (!req.body.email && index === 0)) {
+                console.log('Team notification email sent successfully');
+              }
             } else {
-              console.error('Failed to send team notification email:', result.reason);
+              if (req.body.email && req.body.email.trim() !== '' && index === 0) {
+                console.error('Failed to send customer confirmation email:', result.reason);
+              } else {
+                console.error('Failed to send team notification email:', result.reason);
+              }
             }
-          }
+          });
+        }).catch(promiseError => {
+          console.error('Error in email promise handling:', promiseError);
         });
-      });
+      } catch (emailError) {
+        console.error('Error preparing emails:', emailError);
+        // Continue with response even if email fails
+      }
 
       res.status(200).json({
         success: true,
