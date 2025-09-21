@@ -1,8 +1,22 @@
+import { useState } from "react";
 import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram } from "lucide-react";
 import logoImage from "@assets/PeaceNLock-03_1758436344910.png";
+import PolicyModal, { PolicyType } from "@/components/PolicyModal";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedPolicy, setSelectedPolicy] = useState<PolicyType | null>(null);
+
+  const openModal = (policyType: PolicyType) => {
+    setSelectedPolicy(policyType);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedPolicy(null);
+  };
 
   return (
     <footer className="bg-gray-900 text-white relative overflow-hidden">
@@ -200,21 +214,21 @@ export default function Footer() {
               <button 
                 className="text-gray-400 hover:text-white transition-colors font-medium"
                 data-testid="footer-link-privacy"
-                onClick={() => console.log('Privacy Policy clicked')}
+                onClick={() => openModal('privacy')}
               >
                 Privacy Policy
               </button>
               <button 
                 className="text-gray-400 hover:text-white transition-colors font-medium"
                 data-testid="footer-link-terms"
-                onClick={() => console.log('Terms clicked')}
+                onClick={() => openModal('terms')}
               >
                 Terms of Service
               </button>
               <button 
                 className="text-gray-400 hover:text-white transition-colors font-medium"
                 data-testid="footer-link-accessibility"
-                onClick={() => console.log('Accessibility clicked')}
+                onClick={() => openModal('accessibility')}
               >
                 Accessibility
               </button>
@@ -222,6 +236,12 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      
+      <PolicyModal 
+        isOpen={modalOpen}
+        onClose={closeModal}
+        policyType={selectedPolicy}
+      />
     </footer>
   );
 }
