@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertBookingSchema } from "@shared/schema";
+import { sendEmail, getCustomerConfirmationTemplate, getLeadNotificationTemplate } from "./sendgrid";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Booking submission endpoint
@@ -19,6 +20,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
         phone: booking.phone,
         serviceType: booking.serviceType,
         urgency: booking.urgency
+      });
+
+      // Prepare data for email templates
+      const emailData = {
+        customerName: `${booking.firstName} ${booking.lastName}`,
+        email: booking.email,
+        phone: booking.phone,
+        serviceType: booking.serviceType,
+        urgency: booking.urgency,
+        address: booking.address,
+        description: booking.description || undefined,
+        submittedAt: new Date()
+      };
+
+      // Send emails asynchronously (don't block the response)
+      Promise.allSettled([
+        sendEmail({
+          to: booking.email,
+          from: 'noreply@peaceandlock.com', // You can update this to your verified sender
+          subject: 'Service Request Confirmation - Peace & Lock',
+          html: getCustomerConfirmationTemplate(emailData)
+        }),
+        sendEmail({
+          to: 'team@peaceandlock.com', // Update this to your team email
+          from: 'noreply@peaceandlock.com', // You can update this to your verified sender
+          replyTo: booking.email, // Allow team to reply directly to customer
+          subject: `NEW ${booking.urgency.toUpperCase()} PRIORITY REQUEST - ${booking.serviceType}`,
+          html: getLeadNotificationTemplate(emailData)
+        })
+      ]).then(results => {
+        const [customerResult, teamResult] = results;
+        
+        if (customerResult.status === 'rejected') {
+          console.error('Failed to send customer confirmation email:', customerResult.reason);
+        } else if (!customerResult.value) {
+          console.error('Customer confirmation email failed to send');
+        } else {
+          console.log('Customer confirmation email sent successfully');
+        }
+        
+        if (teamResult.status === 'rejected') {
+          console.error('Failed to send team notification email:', teamResult.reason);
+        } else if (!teamResult.value) {
+          console.error('Team notification email failed to send');
+        } else {
+          console.log('Team notification email sent successfully');
+        }
       });
       
       res.status(201).json({ 

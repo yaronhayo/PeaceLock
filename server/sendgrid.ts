@@ -13,6 +13,42 @@ interface EmailParams {
   subject: string;
   text?: string;
   html?: string;
+  replyTo?: string;
+}
+
+// HTML escape utility to prevent injection
+function escapeHtml(text: string): string {
+  const map: { [key: string]: string } = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
+}
+
+// Whitelist mappers for safe CSS class and subject composition
+const urgencyMap: { [key: string]: string } = {
+  'low': 'low',
+  'medium': 'medium', 
+  'high': 'high'
+};
+
+const serviceTypeMap: { [key: string]: string } = {
+  'Garage Door Repair': 'Repair',
+  'Garage Door Installation': 'Installation', 
+  'Spring Replacement': 'Spring Replacement',
+  'Opener Repair': 'Opener Repair',
+  'Emergency Service': 'Emergency Service'
+};
+
+function getSafeUrgency(urgency: string): string {
+  return urgencyMap[urgency.toLowerCase()] || 'medium';
+}
+
+function getSafeServiceType(serviceType: string): string {
+  return serviceTypeMap[serviceType] || 'Service Request';
 }
 
 export async function sendEmail(params: EmailParams): Promise<boolean> {
@@ -20,13 +56,18 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
     await mailService.send({
       to: params.to,
       from: params.from,
+      replyTo: params.replyTo,
       subject: params.subject,
       text: params.text,
       html: params.html,
     });
     return true;
-  } catch (error) {
-    console.error('SendGrid email error:', error);
+  } catch (error: any) {
+    console.error('SendGrid email error:', {
+      message: error.message,
+      code: error.code,
+      response: error.response?.body
+    });
     return false;
   }
 }
@@ -162,32 +203,32 @@ export function getCustomerConfirmationTemplate(booking: {
         </div>
         
         <div class="content">
-            <div class="greeting">Thank you, ${booking.customerName}!</div>
+            <div class="greeting">Thank you, ${escapeHtml(booking.customerName)}!</div>
             
-            <p>We've received your service request and our team will contact you shortly to schedule your ${booking.serviceType.toLowerCase()} service.</p>
+            <p>We've received your service request and our team will contact you as soon as possible to schedule your ${escapeHtml(booking.serviceType.toLowerCase())} service.</p>
             
             <div class="details-box">
                 <h3 style="margin-top: 0; color: #374151;">Your Service Request Details</h3>
                 <div class="detail-row">
                     <span class="detail-label">Service Type:</span>
-                    <span class="detail-value">${booking.serviceType}</span>
+                    <span class="detail-value">${escapeHtml(booking.serviceType)}</span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Urgency:</span>
-                    <span class="detail-value">${booking.urgency}</span>
+                    <span class="detail-value">${escapeHtml(booking.urgency)}</span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Phone:</span>
-                    <span class="detail-value">${booking.phone}</span>
+                    <span class="detail-value">${escapeHtml(booking.phone)}</span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Address:</span>
-                    <span class="detail-value">${booking.address}</span>
+                    <span class="detail-value">${escapeHtml(booking.address)}</span>
                 </div>
                 ${booking.description ? `
                 <div class="detail-row">
                     <span class="detail-label">Description:</span>
-                    <span class="detail-value">${booking.description}</span>
+                    <span class="detail-value">${escapeHtml(booking.description)}</span>
                 </div>
                 ` : ''}
             </div>
@@ -195,7 +236,7 @@ export function getCustomerConfirmationTemplate(booking: {
             <div class="next-steps">
                 <h3>What Happens Next?</h3>
                 <ul style="margin: 0; padding-left: 20px;">
-                    <li>Our team will review your request within 1 business hour</li>
+                    <li>Our team will review your request as soon as possible</li>
                     <li>We'll call you to discuss your needs and schedule a convenient time</li>
                     <li>Our licensed technician will arrive with all necessary tools and parts</li>
                     <li>We'll provide a detailed assessment and transparent service</li>
@@ -355,48 +396,48 @@ export function getLeadNotificationTemplate(booking: {
 <body>
     <div class="container">
         <div class="header">
-            <div class="alert-badge">🚨 NEW SERVICE REQUEST</div>
+            <div class="alert-badge">NEW SERVICE REQUEST</div>
             <h2 style="margin: 0;">Peace & Lock Team Alert</h2>
         </div>
         
         <div class="content">
-            <div class="urgency-${booking.urgency.toLowerCase()}" style="padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 20px; font-weight: 600;">
-                ${booking.urgency.toUpperCase()} PRIORITY REQUEST
+            <div class="urgency-${getSafeUrgency(booking.urgency)}" style="padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 20px; font-weight: 600;">
+                ${escapeHtml(booking.urgency.toUpperCase())} PRIORITY REQUEST
             </div>
             
             <div class="customer-info">
                 <h3 style="margin-top: 0; color: #374151;">Customer Information</h3>
                 <div class="detail-row">
                     <span class="detail-label">Name:</span>
-                    <span class="detail-value"><strong>${booking.customerName}</strong></span>
+                    <span class="detail-value"><strong>${escapeHtml(booking.customerName)}</strong></span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Phone:</span>
-                    <span class="detail-value"><strong>${booking.phone}</strong></span>
+                    <span class="detail-value"><strong>${escapeHtml(booking.phone)}</strong></span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Email:</span>
-                    <span class="detail-value">${booking.email}</span>
+                    <span class="detail-value">${escapeHtml(booking.email)}</span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Service Type:</span>
-                    <span class="detail-value"><strong>${booking.serviceType}</strong></span>
+                    <span class="detail-value"><strong>${escapeHtml(booking.serviceType)}</strong></span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Address:</span>
-                    <span class="detail-value">${booking.address}</span>
+                    <span class="detail-value">${escapeHtml(booking.address)}</span>
                 </div>
                 ${booking.description ? `
                 <div class="detail-row">
                     <span class="detail-label">Description:</span>
-                    <span class="detail-value">${booking.description}</span>
+                    <span class="detail-value">${escapeHtml(booking.description)}</span>
                 </div>
                 ` : ''}
             </div>
             
             <div class="action-buttons">
-                <a href="tel:${booking.phone}" class="btn btn-primary">📞 Call Customer</a>
-                <a href="mailto:${booking.email}" class="btn btn-secondary">✉️ Email Customer</a>
+                <a href="tel:${escapeHtml(booking.phone)}" class="btn btn-primary">Call Customer</a>
+                <a href="mailto:${escapeHtml(booking.email)}" class="btn btn-secondary">Email Customer</a>
             </div>
             
             <div class="timestamp">
@@ -413,7 +454,7 @@ export function getLeadNotificationTemplate(booking: {
         </div>
         
         <div class="footer">
-            <p><strong>Peace & Lock Internal System</strong> | Respond within 1 business hour</p>
+            <p><strong>Peace & Lock Internal System</strong> | Respond as soon as possible</p>
         </div>
     </div>
 </body>
