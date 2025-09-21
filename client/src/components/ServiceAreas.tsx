@@ -115,7 +115,7 @@ export default function ServiceAreas() {
                 </h4>
                 <div className="rounded-lg overflow-hidden border">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193574.67624739776!2d-74.20651378906249!3d40.73982545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20Jersey!5e0!3m2!1sen!2sus!4v1701234567890!5m2!1sen!2sus&markers=color:red%7Clabel:S%7C40.8848,-74.0094%7C40.7282,-74.0776%7C40.7589,-74.1774%7C40.8968,-74.1731%7C40.7982,-74.5343%7C40.6646,-74.3093"
+                    src="https://maps.google.com/maps?q=39.833851,-74.871826&hl=en&z=8&output=embed"
                     width="100%"
                     height="300"
                     style={{ border: 0 }}
