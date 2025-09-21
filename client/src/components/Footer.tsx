@@ -132,19 +132,19 @@ export default function Footer() {
               </div>
               <div className="flex items-center">
                 <Mail className="w-4 h-4 mr-3 text-secondary" />
-                <span className="text-gray-300">support@peaceandlocknj.com</span>
+                <span className="text-gray-300">peaceandlockgarage@gmail.com</span>
               </div>
               <div className="flex items-center">
                 <MapPin className="w-4 h-4 mr-3 text-secondary" />
-                <span className="text-gray-300">Serving all of New Jersey</span>
+                <span className="text-gray-300">Englewood & Bergen County, NJ</span>
               </div>
               <div className="flex items-center">
                 <Clock className="w-4 h-4 mr-3 text-secondary" />
                 <div>
-                  <p>Mon-Fri: 7:00 AM - 7:00 PM</p>
-                  <p>Sat: 8:00 AM - 5:00 PM</p>
-                  <p>Sun: 9:00 AM - 3:00 PM</p>
-                  <p className="text-primary font-medium">Emergency Service Available</p>
+                  <p>Mon-Fri: 24 hours</p>
+                  <p>Sat: 24 hours</p>
+                  <p>Sun: 24 hours</p>
+                  <p className="text-primary font-medium">24/7 Emergency & Regular Service</p>
                 </div>
               </div>
             </div>
