@@ -3,9 +3,114 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import heroImage from "@assets/generated_images/garage_door_repair_technician_707b350f.png";
 
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+
 export default function Hero() {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    serviceType: '',
+    description: ''
+  });
+
   const scrollToBooking = () => {
     document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleQuickSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Convert hero form data to booking format
+      const [firstName, ...lastNameParts] = formData.name.split(' ');
+      const bookingData = {
+        firstName: firstName || '',
+        lastName: lastNameParts.join(' ') || 'N/A',
+        phone: formData.phone,
+        email: '', // Optional in hero form
+        serviceType: formData.serviceType,
+        urgency: 'normal',
+        address: 'TBD', // Will be collected later
+        city: 'TBD',
+        zipCode: 'TBD',
+        description: formData.description,
+        propertyType: 'residential',
+        contactMethod: 'phone',
+        marketingConsent: false
+      };
+
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        console.error('Non-JSON response:', text);
+        throw new Error('Server returned non-JSON response');
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Request Submitted!",
+          description: "Thank you! We'll contact you within 30 minutes to discuss your needs and schedule service.",
+        });
+
+        // Reset form
+        setFormData({
+          name: '',
+          phone: '',
+          serviceType: '',
+          description: ''
+        });
+      } else {
+        toast({
+          title: "Submission Error",
+          description: result.message || "Please check your information and try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Hero form submission error:', error);
+
+      let errorMessage = "Unable to submit your request. Please try again or call us directly.";
+      if (error instanceof Error) {
+        if (error.message.includes('non-JSON')) {
+          errorMessage = "Server configuration error. Please call us directly at (201) 431-3480.";
+        } else if (error.message.includes('HTTP error')) {
+          errorMessage = "Server error occurred. Please try again in a moment.";
+        }
+      }
+
+      toast({
+        title: "Submission Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
