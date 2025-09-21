@@ -2,8 +2,12 @@ import { useState } from "react";
 import { Calendar, Clock, User, Phone, Mail, Home, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 export default function BookingForm() {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     // Personal Information
     firstName: '',
@@ -48,11 +52,64 @@ export default function BookingForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Booking form submitted:', formData);
-    // In a real app, this would send to the backend
-    alert('Thank you! Your service request has been submitted. We\'ll contact you within 30 minutes to confirm your appointment.');
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        toast({
+          title: "Service Request Submitted!",
+          description: "Thank you! We'll contact you within 30 minutes to confirm your appointment.",
+        });
+        
+        // Reset form
+        setFormData({
+          firstName: '',
+          lastName: '',
+          phone: '',
+          email: '',
+          serviceType: '',
+          urgency: 'normal',
+          preferredDate: '',
+          preferredTime: '',
+          address: '',
+          city: '',
+          zipCode: '',
+          propertyType: 'residential',
+          description: '',
+          garageDoorBrand: '',
+          ageOfDoor: '',
+          contactMethod: 'phone',
+          marketingConsent: false
+        });
+      } else {
+        toast({
+          title: "Submission Error",
+          description: result.message || "Please check your information and try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast({
+        title: "Network Error",
+        description: "Unable to submit your request. Please try again or call us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -347,10 +404,11 @@ export default function BookingForm() {
                   <Button 
                     type="submit" 
                     className="w-full text-lg py-4"
+                    disabled={isSubmitting}
                     data-testid="booking-button-submit"
                   >
                     <Calendar className="w-5 h-5 mr-2" />
-                    Submit Service Request
+                    {isSubmitting ? 'Submitting...' : 'Submit Service Request'}
                   </Button>
                   <p className="text-sm text-muted-foreground text-center mt-4">
                     We'll contact you within 30 minutes during business hours to confirm your appointment. 
