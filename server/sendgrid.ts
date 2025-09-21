@@ -59,6 +59,7 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
   if (isDevelopment && !process.env.SENDGRID_API_KEY) {
     console.log('Development mode: Email would be sent to:', params.to);
     console.log('Subject:', params.subject);
+    console.log('NOTE: To test real email sending in development, set SENDGRID_API_KEY environment variable');
     return true;
   }
 
