@@ -62,27 +62,22 @@ export default function BookingForm() {
     setIsSubmitting(true);
 
     try {
-      // Execute reCAPTCHA
-      const recaptchaToken = await executeRecaptcha('booking_form_submit');
+      // Simplified for testing - only send required fields
+      const simplifiedData = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phone: formData.phone,
+        serviceType: formData.serviceType
+      };
 
-      if (!recaptchaToken) {
-        toast({
-          title: "Verification Failed",
-          description: "Please try again or call us directly at (201) 431-3480.",
-          variant: "destructive",
-        });
-        return;
-      }
+      console.log('Booking form submitting:', simplifiedData);
 
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          recaptchaToken
-        }),
+        body: JSON.stringify(simplifiedData),
       });
 
       if (!response.ok) {

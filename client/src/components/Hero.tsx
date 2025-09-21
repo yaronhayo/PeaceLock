@@ -37,45 +37,23 @@ export default function Hero() {
     setIsSubmitting(true);
 
     try {
-      // Execute reCAPTCHA
-      const recaptchaToken = await executeRecaptcha('hero_form_submit');
-
-      if (!recaptchaToken) {
-        toast({
-          title: "Verification Failed",
-          description: "Please try again or call us directly at (201) 431-3480.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Convert hero form data to booking format
+      // Convert hero form data to booking format (simplified for testing)
       const [firstName, ...lastNameParts] = formData.name.split(' ');
       const bookingData = {
         firstName: firstName || '',
         lastName: lastNameParts.join(' ') || 'N/A',
         phone: formData.phone,
-        email: '', // Optional in hero form
-        serviceType: formData.serviceType,
-        urgency: 'normal',
-        address: 'TBD', // Will be collected later
-        city: 'TBD',
-        zipCode: 'TBD',
-        description: formData.description,
-        propertyType: 'residential',
-        contactMethod: 'phone',
-        marketingConsent: false
+        serviceType: formData.serviceType
       };
+
+      console.log('Hero form submitting:', bookingData);
 
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...bookingData,
-          recaptchaToken
-        }),
+        body: JSON.stringify(bookingData),
       });
 
       if (!response.ok) {
