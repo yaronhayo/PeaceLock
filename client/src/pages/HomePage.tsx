@@ -1,11 +1,10 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
-import ServiceAreas from "@/components/ServiceAreas";
+import WhyChoose from "@/components/WhyChoose";
+import About from "@/components/About";
 import FAQ from "@/components/FAQ";
 import Reviews from "@/components/Reviews";
-import About from "@/components/About";
-import Contact from "@/components/Contact";
 import BookingForm from "@/components/BookingForm";
 import Footer from "@/components/Footer";
 
@@ -16,7 +15,7 @@ export default function HomePage() {
       <main>
         <Hero />
         <Services />
-        <ServiceAreas />
+        <WhyChoose />
         <About />
         <FAQ />
         <Reviews />
