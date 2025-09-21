@@ -7,13 +7,12 @@
       "config": {
         "distDir": "dist/public"
       }
+    },
+    {
+      "src": "api/bookings.ts",
+      "use": "@vercel/node"
     }
   ],
-  "functions": {
-    "api/bookings.js": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "routes": [
     {
       "src": "/api/(.*)",
