@@ -1,6 +1,19 @@
 import { MapPin, Phone, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import '../leaflet.css';
+
+// Fix for default markers in Leaflet
+if (typeof window !== 'undefined') {
+  delete (L.Icon.Default.prototype as any)._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  });
+}
 
 const serviceAreas = [
   {
@@ -27,6 +40,52 @@ const serviceAreas = [
     county: "Union County",
     cities: ["Elizabeth", "Union", "Plainfield", "Westfield", "Summit", "Cranford"]
   }
+];
+
+// City coordinates for map markers
+const cityLocations = [
+  // Bergen County
+  { name: "Hackensack", county: "Bergen", lat: 40.8859, lng: -74.0429 },
+  { name: "Paramus", county: "Bergen", lat: 40.9445, lng: -74.0654 },
+  { name: "Fort Lee", county: "Bergen", lat: 40.8507, lng: -73.9704 },
+  { name: "Englewood", county: "Bergen", lat: 40.8926, lng: -73.9726 },
+  { name: "Teaneck", county: "Bergen", lat: 40.8976, lng: -74.0160 },
+  { name: "Ridgewood", county: "Bergen", lat: 40.9798, lng: -74.1165 },
+  // Hudson County
+  { name: "Jersey City", county: "Hudson", lat: 40.7178, lng: -74.0431 },
+  { name: "Hoboken", county: "Hudson", lat: 40.7440, lng: -74.0324 },
+  { name: "Union City", county: "Hudson", lat: 40.7943, lng: -74.0260 },
+  { name: "West New York", county: "Hudson", lat: 40.7879, lng: -74.0143 },
+  { name: "Secaucus", county: "Hudson", lat: 40.7895, lng: -74.0565 },
+  { name: "Bayonne", county: "Hudson", lat: 40.6687, lng: -74.1143 },
+  // Essex County
+  { name: "Newark", county: "Essex", lat: 40.7357, lng: -74.1724 },
+  { name: "East Orange", county: "Essex", lat: 40.7673, lng: -74.2049 },
+  { name: "Irvington", county: "Essex", lat: 40.7323, lng: -74.2346 },
+  { name: "Bloomfield", county: "Essex", lat: 40.8068, lng: -74.1854 },
+  { name: "Montclair", county: "Essex", lat: 40.8259, lng: -74.2090 },
+  { name: "Livingston", county: "Essex", lat: 40.7957, lng: -74.3149 },
+  // Passaic County
+  { name: "Paterson", county: "Passaic", lat: 40.9168, lng: -74.1718 },
+  { name: "Clifton", county: "Passaic", lat: 40.8584, lng: -74.1638 },
+  { name: "Passaic", county: "Passaic", lat: 40.8568, lng: -74.1282 },
+  { name: "Wayne", county: "Passaic", lat: 40.9254, lng: -74.2765 },
+  { name: "Pompton Lakes", county: "Passaic", lat: 40.9943, lng: -74.2835 },
+  { name: "Wanaque", county: "Passaic", lat: 41.0426, lng: -74.2943 },
+  // Morris County
+  { name: "Morristown", county: "Morris", lat: 40.7968, lng: -74.4815 },
+  { name: "Parsippany", county: "Morris", lat: 40.8579, lng: -74.4260 },
+  { name: "Dover", county: "Morris", lat: 40.8835, lng: -74.5629 },
+  { name: "Boonton", county: "Morris", lat: 40.9024, lng: -74.4071 },
+  { name: "Madison", county: "Morris", lat: 40.7593, lng: -74.4171 },
+  { name: "Chatham", county: "Morris", lat: 40.7407, lng: -74.3835 },
+  // Union County
+  { name: "Elizabeth", county: "Union", lat: 40.6640, lng: -74.2107 },
+  { name: "Union", county: "Union", lat: 40.6976, lng: -74.2632 },
+  { name: "Plainfield", county: "Union", lat: 40.6338, lng: -74.4071 },
+  { name: "Westfield", county: "Union", lat: 40.6590, lng: -74.3476 },
+  { name: "Summit", county: "Union", lat: 40.7165, lng: -74.3548 },
+  { name: "Cranford", county: "Union", lat: 40.6584, lng: -74.3001 }
 ];
 
 export default function ServiceAreas() {
@@ -113,21 +172,42 @@ export default function ServiceAreas() {
                   <MapPin className="w-5 h-5 text-primary inline mr-2" />
                   Our Service Coverage Area
                 </h4>
-                <div className="rounded-lg overflow-hidden border">
-                  <iframe
-                    src="https://maps.google.com/maps?q=New+Jersey+Bergen+County+Hackensack+Paramus+Fort+Lee+Englewood+Teaneck+Ridgewood+Hudson+County+Jersey+City+Hoboken+Union+City+West+New+York+Secaucus+Bayonne+Essex+County+Newark+East+Orange+Irvington+Bloomfield+Montclair+Livingston+Passaic+County+Paterson+Clifton+Passaic+Wayne+Pompton+Lakes+Wanaque+Morris+County+Morristown+Parsippany+Dover+Boonton+Madison+Chatham+Union+County+Elizabeth+Union+Plainfield+Westfield+Summit+Cranford&hl=en&z=9&output=embed"
-                    width="100%"
-                    height="300"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Peace & Lock Service Areas Map"
-                    data-testid="service-areas-map"
-                  ></iframe>
+                <div className="rounded-lg overflow-hidden border" style={{ height: '300px' }}>
+                  {typeof window !== 'undefined' && (
+                    <MapContainer
+                      center={[40.7282, -74.0776] as [number, number]}
+                      zoom={9}
+                      style={{ height: '100%', width: '100%' }}
+                      data-testid="service-areas-map"
+                    >
+                      <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                      />
+                      {cityLocations.map((city, index) => (
+                        <Marker key={index} position={[city.lat, city.lng] as [number, number]}>
+                          <Popup>
+                            <div className="text-center">
+                              <h6 className="font-semibold">{city.name}</h6>
+                              <p className="text-sm text-muted-foreground">{city.county} County</p>
+                              <p className="text-xs text-primary">Service Available</p>
+                            </div>
+                          </Popup>
+                        </Marker>
+                      ))}
+                    </MapContainer>
+                  )}
+                  {typeof window === 'undefined' && (
+                    <div className="flex items-center justify-center h-full bg-muted/20">
+                      <div className="text-center">
+                        <MapPin className="w-12 h-12 text-primary mx-auto mb-3" />
+                        <p className="text-muted-foreground">Interactive map loading...</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <p className="text-center text-muted-foreground text-sm mt-3">
-                  Map shows our comprehensive service coverage across all New Jersey counties and cities
+                  Click on any marker to see service availability in that city
                 </p>
               </CardContent>
             </Card>
