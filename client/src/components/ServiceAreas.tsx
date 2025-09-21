@@ -115,7 +115,7 @@ export default function ServiceAreas() {
                 </h4>
                 <div className="rounded-lg overflow-hidden border">
                   <iframe
-                    src="https://maps.google.com/maps?q=39.833851,-74.871826&hl=en&z=8&output=embed"
+                    src="https://maps.google.com/maps?q=New+Jersey+Bergen+County+Hackensack+Paramus+Fort+Lee+Englewood+Teaneck+Ridgewood+Hudson+County+Jersey+City+Hoboken+Union+City+West+New+York+Secaucus+Bayonne+Essex+County+Newark+East+Orange+Irvington+Bloomfield+Montclair+Livingston+Passaic+County+Paterson+Clifton+Passaic+Wayne+Pompton+Lakes+Wanaque+Morris+County+Morristown+Parsippany+Dover+Boonton+Madison+Chatham+Union+County+Elizabeth+Union+Plainfield+Westfield+Summit+Cranford&hl=en&z=9&output=embed"
                     width="100%"
                     height="300"
                     style={{ border: 0 }}
@@ -127,7 +127,7 @@ export default function ServiceAreas() {
                   ></iframe>
                 </div>
                 <p className="text-center text-muted-foreground text-sm mt-3">
-                  Red markers show our primary service coverage areas across New Jersey
+                  Map shows our comprehensive service coverage across all New Jersey counties and cities
                 </p>
               </CardContent>
             </Card>
