@@ -102,18 +102,18 @@ export default function FAQ() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button 
-                  onClick={() => window.open('tel:(201) 431-3480')}
-                  className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover-elevate transition-all"
-                  data-testid="faq-call-button"
-                >
-                  Call (201) 431-3480
-                </button>
-                <button 
                   onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="px-6 py-2 border border-primary text-primary rounded-md hover-elevate transition-all"
+                  className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover-elevate transition-all"
                   data-testid="faq-contact-button"
                 >
                   Send Message
+                </button>
+                <button 
+                  onClick={() => window.open('tel:(201) 431-3480')}
+                  className="px-6 py-2 bg-secondary text-secondary-foreground rounded-md hover-elevate transition-all"
+                  data-testid="faq-call-button"
+                >
+                  Call (201) 431-3480
                 </button>
               </div>
             </CardContent>

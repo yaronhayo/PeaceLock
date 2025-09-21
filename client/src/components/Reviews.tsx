@@ -141,7 +141,7 @@ export default function Reviews() {
                 </p>
                 <button 
                   onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="px-6 py-2 bg-secondary text-secondary-foreground rounded-md hover-elevate transition-all"
+                  className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover-elevate transition-all"
                   data-testid="reviews-book-button"
                 >
                   Book Your Service Today

@@ -49,6 +49,7 @@ export default function ThankYou() {
                 <h3 className="font-semibold mb-1">Need Immediate Help?</h3>
                 <p className="text-sm text-muted-foreground mb-2">Call us for emergency service</p>
                 <Button 
+                  variant="secondary"
                   size="sm" 
                   onClick={() => window.open('tel:(201) 431-3480')}
                   data-testid="thankyou-emergency-call"
@@ -83,7 +84,6 @@ export default function ThankYou() {
               </Button>
               
               <Button 
-                variant="outline"
                 onClick={() => window.location.href = '/book'}
                 className="w-full"
                 data-testid="thankyou-book-another"

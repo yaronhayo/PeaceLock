@@ -81,7 +81,7 @@ export default function BookingForm() {
                 {/* Personal Information */}
                 <div>
                   <h3 className="text-lg font-semibold mb-4 flex items-center">
-                    <User className="w-5 h-5 mr-2 text-primary" />
+                    <User className="w-5 h-5 mr-2 text-ring" />
                     Personal Information
                   </h3>
                   <div className="grid md:grid-cols-2 gap-4">
@@ -96,7 +96,7 @@ export default function BookingForm() {
                         value={formData.firstName}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-firstname"
                       />
                     </div>
@@ -111,7 +111,7 @@ export default function BookingForm() {
                         value={formData.lastName}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-lastname"
                       />
                     </div>
@@ -126,7 +126,7 @@ export default function BookingForm() {
                         value={formData.phone}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-phone"
                       />
                     </div>
@@ -140,7 +140,7 @@ export default function BookingForm() {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-email"
                       />
                     </div>
@@ -150,7 +150,7 @@ export default function BookingForm() {
                 {/* Service Details */}
                 <div>
                   <h3 className="text-lg font-semibold mb-4 flex items-center">
-                    <Wrench className="w-5 h-5 mr-2 text-primary" />
+                    <Wrench className="w-5 h-5 mr-2 text-ring" />
                     Service Details
                   </h3>
                   <div className="grid md:grid-cols-2 gap-4">
@@ -164,7 +164,7 @@ export default function BookingForm() {
                         value={formData.serviceType}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-select-service"
                       >
                         <option value="">Select service type</option>
@@ -187,7 +187,7 @@ export default function BookingForm() {
                         value={formData.urgency}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-select-urgency"
                       >
                         <option value="normal">Normal (1-2 days)</option>
@@ -206,7 +206,7 @@ export default function BookingForm() {
                         value={formData.preferredDate}
                         onChange={handleInputChange}
                         min={new Date().toISOString().split('T')[0]}
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-date"
                       />
                     </div>
@@ -219,7 +219,7 @@ export default function BookingForm() {
                         name="preferredTime"
                         value={formData.preferredTime}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-select-time"
                       >
                         <option value="">Any time</option>
@@ -234,7 +234,7 @@ export default function BookingForm() {
                 {/* Property Information */}
                 <div>
                   <h3 className="text-lg font-semibold mb-4 flex items-center">
-                    <Home className="w-5 h-5 mr-2 text-primary" />
+                    <Home className="w-5 h-5 mr-2 text-ring" />
                     Property Information
                   </h3>
                   <div className="grid md:grid-cols-2 gap-4">
@@ -249,7 +249,7 @@ export default function BookingForm() {
                         value={formData.address}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-address"
                       />
                     </div>
@@ -264,7 +264,7 @@ export default function BookingForm() {
                         value={formData.city}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-city"
                       />
                     </div>
@@ -279,7 +279,7 @@ export default function BookingForm() {
                         value={formData.zipCode}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-zip"
                       />
                     </div>
@@ -299,7 +299,7 @@ export default function BookingForm() {
                     required
                     rows={4}
                     placeholder="Please provide details about your garage door issue, what you've noticed, any unusual sounds, etc."
-                    className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                    className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring resize-none"
                     data-testid="booking-textarea-description"
                   ></textarea>
                 </div>
@@ -317,7 +317,7 @@ export default function BookingForm() {
                       value={formData.garageDoorBrand}
                       onChange={handleInputChange}
                       placeholder="e.g., Clopay, Wayne Dalton, Amarr"
-                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                       data-testid="booking-input-brand"
                     />
                   </div>
@@ -330,7 +330,7 @@ export default function BookingForm() {
                       name="ageOfDoor"
                       value={formData.ageOfDoor}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                       data-testid="booking-select-age"
                     >
                       <option value="">Not sure</option>

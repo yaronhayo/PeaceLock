@@ -98,7 +98,7 @@ export default function Services() {
                       Book This Service
                     </Button>
                     <Button 
-                      variant="outline" 
+                      variant="secondary" 
                       onClick={() => window.open('tel:(201) 431-3480')}
                       className="w-full"
                       data-testid={`button-call-${index}`}

@@ -126,6 +126,7 @@ export default function ServiceAreas() {
                 Don't see your area listed? We may still serve you!
               </p>
               <Button 
+                variant="secondary"
                 size="lg"
                 onClick={() => window.open('tel:(201) 431-3480')}
                 data-testid="button-check-coverage"

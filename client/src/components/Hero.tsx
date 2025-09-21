@@ -53,22 +53,22 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button 
                 size="lg"
-                onClick={() => window.open('tel:(201) 431-3480')}
-                className="text-lg px-8 py-3"
-                data-testid="hero-button-call"
-              >
-                <Phone className="w-5 h-5 mr-2" />
-                Call: (201) 431-3480
-              </Button>
-              <Button 
-                variant="secondary" 
-                size="lg"
                 onClick={scrollToBooking}
                 className="text-lg px-8 py-3"
                 data-testid="hero-button-book"
               >
                 <Calendar className="w-5 h-5 mr-2" />
                 Book a Service
+              </Button>
+              <Button 
+                variant="secondary" 
+                size="lg"
+                onClick={() => window.open('tel:(201) 431-3480')}
+                className="text-lg px-8 py-3"
+                data-testid="hero-button-call"
+              >
+                <Phone className="w-5 h-5 mr-2" />
+                Call: (201) 431-3480
               </Button>
             </div>
 
@@ -89,7 +89,7 @@ export default function Hero() {
                     <input
                       type="text"
                       placeholder="Your Name"
-                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                       data-testid="input-name"
                     />
                   </div>
@@ -97,13 +97,13 @@ export default function Hero() {
                     <input
                       type="tel"
                       placeholder="Phone Number"
-                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                       data-testid="input-phone"
                     />
                   </div>
                   <div>
                     <select 
-                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                       data-testid="select-service"
                     >
                       <option value="">Select Service Needed</option>

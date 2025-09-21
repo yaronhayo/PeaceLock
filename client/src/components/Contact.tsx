@@ -102,6 +102,7 @@ export default function Contact() {
                   We respond to emergencies 24/7 throughout our service area.
                 </p>
                 <Button 
+                  variant="secondary"
                   onClick={() => window.open('tel:(201) 431-3480')}
                   className="w-full"
                   data-testid="emergency-call-button"
@@ -136,7 +137,7 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="contact-input-name"
                       />
                     </div>
@@ -151,7 +152,7 @@ export default function Contact() {
                         value={formData.phone}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="contact-input-phone"
                       />
                     </div>
@@ -167,7 +168,7 @@ export default function Contact() {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                       data-testid="contact-input-email"
                     />
                   </div>
@@ -182,7 +183,7 @@ export default function Contact() {
                       value={formData.subject}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                       data-testid="contact-select-subject"
                     >
                       <option value="">Select a topic</option>
@@ -208,7 +209,7 @@ export default function Contact() {
                       required
                       rows={5}
                       placeholder="Please describe your garage door issue or project in detail..."
-                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                      className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring resize-none"
                       data-testid="contact-textarea-message"
                     ></textarea>
                   </div>

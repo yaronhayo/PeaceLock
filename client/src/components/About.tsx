@@ -145,19 +145,19 @@ export default function About() {
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button 
                   size="lg"
+                  onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
+                  data-testid="about-book-button"
+                >
+                  Book Free Estimate
+                </Button>
+                <Button 
+                  variant="secondary" 
+                  size="lg"
                   onClick={() => window.open('tel:(201) 431-3480')}
                   data-testid="about-call-button"
                 >
                   <Phone className="w-4 h-4 mr-2" />
                   Call (201) 431-3480
-                </Button>
-                <Button 
-                  variant="secondary" 
-                  size="lg"
-                  onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-                  data-testid="about-book-button"
-                >
-                  Book Free Estimate
                 </Button>
               </div>
             </CardContent>

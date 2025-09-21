@@ -59,7 +59,6 @@ export default function Header() {
           {/* CTAs */}
           <div className="hidden md:flex items-center space-x-3">
             <Button 
-              variant="outline" 
               size="sm"
               onClick={() => scrollToSection('booking')}
               data-testid="button-book-service"
@@ -68,6 +67,7 @@ export default function Header() {
               Book a Service
             </Button>
             <Button 
+              variant="secondary"
               size="sm"
               onClick={() => window.open('tel:(201) 431-3480')}
               data-testid="button-call-now"
@@ -123,7 +123,6 @@ export default function Header() {
               </button>
               <div className="flex flex-col space-y-2 pt-2">
                 <Button 
-                  variant="outline" 
                   size="sm"
                   onClick={() => scrollToSection('booking')}
                   data-testid="mobile-button-book-service"
@@ -132,6 +131,7 @@ export default function Header() {
                   Book a Service
                 </Button>
                 <Button 
+                  variant="secondary"
                   size="sm"
                   onClick={() => window.open('tel:(201) 431-3480')}
                   data-testid="mobile-button-call-now"
