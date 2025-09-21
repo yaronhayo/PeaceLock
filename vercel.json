@@ -1,29 +1,19 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/bookings.ts",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "dist/public/**",
-      "use": "@vercel/static"
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "dist/public",
+  "functions": {
+    "api/bookings.ts": {
+      "runtime": "@vercel/node@3.0.27"
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
-      "src": "/api/bookings",
-      "dest": "/api/bookings"
+      "source": "/api/bookings",
+      "destination": "/api/bookings"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/dist/public/assets/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/dist/public/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  ],
-  "cleanUrls": false,
-  "trailingSlash": false
+  ]
 }
