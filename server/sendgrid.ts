@@ -1,11 +1,15 @@
 import { MailService } from '@sendgrid/mail';
 
-if (!process.env.SENDGRID_API_KEY) {
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+if (!process.env.SENDGRID_API_KEY && !isDevelopment) {
   throw new Error("SENDGRID_API_KEY environment variable must be set");
 }
 
 const mailService = new MailService();
-mailService.setApiKey(process.env.SENDGRID_API_KEY!);
+if (process.env.SENDGRID_API_KEY) {
+  mailService.setApiKey(process.env.SENDGRID_API_KEY);
+}
 
 interface EmailParams {
   to: string;
@@ -52,6 +56,12 @@ function getSafeServiceType(serviceType: string): string {
 }
 
 export async function sendEmail(params: EmailParams): Promise<boolean> {
+  if (isDevelopment && !process.env.SENDGRID_API_KEY) {
+    console.log('Development mode: Email would be sent to:', params.to);
+    console.log('Subject:', params.subject);
+    return true;
+  }
+
   try {
     const emailData: any = {
       to: params.to,
@@ -60,11 +70,11 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
       text: params.text,
       html: params.html,
     };
-    
+
     if (params.replyTo) {
       emailData.replyTo = params.replyTo;
     }
-    
+
     await mailService.send(emailData);
     return true;
   } catch (error: any) {
