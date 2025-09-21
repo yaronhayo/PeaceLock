@@ -5,6 +5,7 @@ import WhyChoose from "@/components/WhyChoose";
 import About from "@/components/About";
 import FAQ from "@/components/FAQ";
 import Reviews from "@/components/Reviews";
+import ServiceAreas from "@/components/ServiceAreas";
 import BookingForm from "@/components/BookingForm";
 import Footer from "@/components/Footer";
 
@@ -19,6 +20,7 @@ export default function HomePage() {
         <About />
         <FAQ />
         <Reviews />
+        <ServiceAreas />
         <BookingForm />
       </main>
       <Footer />
