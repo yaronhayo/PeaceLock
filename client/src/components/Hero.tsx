@@ -192,11 +192,15 @@ export default function Hero() {
                 <h3 className="text-2xl font-semibold mb-4 text-center">
                   Request Your Estimate
                 </h3>
-                <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); console.log('Form submitted'); }}>
+                <form className="space-y-4" onSubmit={handleQuickSubmit}>
                   <div>
                     <input
                       type="text"
+                      name="name"
                       placeholder="Your Name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
                       className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                       data-testid="input-name"
                     />
@@ -204,13 +208,21 @@ export default function Hero() {
                   <div>
                     <input
                       type="tel"
+                      name="phone"
                       placeholder="Phone Number"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      required
                       className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                       data-testid="input-phone"
                     />
                   </div>
                   <div>
-                    <select 
+                    <select
+                      name="serviceType"
+                      value={formData.serviceType}
+                      onChange={handleInputChange}
+                      required
                       className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                       data-testid="select-service"
                     >
@@ -224,18 +236,23 @@ export default function Hero() {
                   </div>
                   <div>
                     <textarea
+                      name="description"
                       placeholder="Describe your issue or project"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                      required
                       rows={3}
                       className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"
                       data-testid="textarea-description"
                     ></textarea>
                   </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full text-lg py-3"
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full text-lg py-3 bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800"
                     data-testid="button-submit-estimate"
                   >
-                    Request Estimate
+                    {isSubmitting ? 'Submitting...' : 'Request Estimate'}
                   </Button>
                 </form>
                 <p className="text-xs text-muted-foreground text-center mt-3">
