@@ -1,19 +1,27 @@
 {
-  "buildCommand": "npm run vercel-build",
-  "outputDirectory": "dist/public",
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/public"
+      }
+    }
+  ],
   "functions": {
-    "api/bookings.ts": {
-      "runtime": "@vercel/node@3.1.0"
+    "api/bookings.js": {
+      "runtime": "nodejs20.x"
     }
   },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/bookings",
-      "destination": "/api/bookings"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
