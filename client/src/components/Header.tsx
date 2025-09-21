@@ -11,14 +11,23 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 border-b">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center">
+          <button 
+            onClick={scrollToTop}
+            className="flex items-center hover:opacity-80 transition-opacity"
+            data-testid="logo-button"
+          >
             <img src={logoImage} alt="Peace & Lock" className="h-12 w-auto" />
-          </div>
+          </button>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
