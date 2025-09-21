@@ -206,26 +206,42 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-primary-foreground/20">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="text-center space-y-4">
+            {/* Made with love attribution */}
+            <div className="text-sm text-gray-400">
+              Made with <span className="text-red-500">♥</span> by{' '}
+              <a
+                href="https://gettmarketing.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-orange-400 hover:text-orange-300 transition-colors font-medium underline"
+              >
+                Gett Marketing
+              </a>
+            </div>
+
+            {/* Copyright */}
             <div className="text-sm text-gray-300 font-medium">
               © {currentYear} Peace & Lock. All rights reserved. | NJ License #13VH13566900
             </div>
-            <div className="flex space-x-6 text-sm">
-              <button 
+
+            {/* Legal Links */}
+            <div className="flex justify-center space-x-6 text-sm">
+              <button
                 className="text-gray-400 hover:text-white transition-colors font-medium"
                 data-testid="footer-link-privacy"
                 onClick={() => openModal('privacy')}
               >
                 Privacy Policy
               </button>
-              <button 
+              <button
                 className="text-gray-400 hover:text-white transition-colors font-medium"
                 data-testid="footer-link-terms"
                 onClick={() => openModal('terms')}
               >
                 Terms of Service
               </button>
-              <button 
+              <button
                 className="text-gray-400 hover:text-white transition-colors font-medium"
                 data-testid="footer-link-accessibility"
                 onClick={() => openModal('accessibility')}
