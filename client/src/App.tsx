@@ -8,6 +8,8 @@ import BookingPage from "@/pages/BookingPage";
 import ThankYouPage from "@/pages/ThankYouPage";
 import NotFound from "@/pages/not-found";
 import ScrollToTop from "@/components/ScrollToTop";
+import { useEffect } from "react";
+import { loadRecaptcha } from "@/utils/recaptcha";
 
 function Router() {
   return (
@@ -22,6 +24,11 @@ function Router() {
 }
 
 function App() {
+  useEffect(() => {
+    // Load reCAPTCHA globally
+    loadRecaptcha();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

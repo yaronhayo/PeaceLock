@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Calendar, Clock, User, Phone, Mail, Home, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { loadRecaptcha, executeRecaptcha } from "@/utils/recaptcha";
 
 export default function BookingForm() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    loadRecaptcha();
+  }, []);
   const [formData, setFormData] = useState({
     // Personal Information
     firstName: '',
@@ -55,14 +60,29 @@ export default function BookingForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
+      // Execute reCAPTCHA
+      const recaptchaToken = await executeRecaptcha('booking_form_submit');
+
+      if (!recaptchaToken) {
+        toast({
+          title: "Verification Failed",
+          description: "Please try again or call us directly at (201) 431-3480.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken
+        }),
       });
 
       if (!response.ok) {

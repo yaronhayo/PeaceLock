@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { storage } from '../server/storage';
 import { insertBookingSchema } from '../shared/schema';
 import { sendEmail, getCustomerConfirmationTemplate, getLeadNotificationTemplate } from '../server/sendgrid';
+import { verifyRecaptcha } from '../server/recaptcha';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Enable CORS
@@ -17,8 +18,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.method === 'POST') {
     try {
+      // Extract reCAPTCHA token from request body
+      const { recaptchaToken, ...formData } = req.body;
+
+      // Verify reCAPTCHA token
+      if (!recaptchaToken) {
+        return res.status(400).json({
+          success: false,
+          message: 'reCAPTCHA verification required'
+        });
+      }
+
+      const isRecaptchaValid = await verifyRecaptcha(recaptchaToken);
+      if (!isRecaptchaValid) {
+        return res.status(400).json({
+          success: false,
+          message: 'reCAPTCHA verification failed'
+        });
+      }
+
       // Validate the request body against our schema
-      const bookingData = insertBookingSchema.parse(req.body);
+      const bookingData = insertBookingSchema.parse(formData);
 
       // Create the booking in storage
       const booking = await storage.createBooking(bookingData);
@@ -44,38 +64,52 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       };
 
       // Send emails asynchronously (don't block the response)
-      Promise.allSettled([
-        sendEmail({
-          to: booking.email,
-          from: 'noreply@peaceandlockgarage.com', // Updated email domain
-          subject: 'Service Request Confirmation - Peace & Lock',
-          html: getCustomerConfirmationTemplate(emailData)
-        }),
+      const emailPromises = [];
+
+      // Only send customer confirmation if email is provided
+      if (booking.email && booking.email.trim() !== '') {
+        emailPromises.push(
+          sendEmail({
+            to: booking.email,
+            from: 'noreply@peaceandlockgarage.com',
+            subject: 'Service Request Confirmation - Peace & Lock',
+            html: getCustomerConfirmationTemplate(emailData)
+          })
+        );
+      }
+
+      // Always send team notification
+      emailPromises.push(
         sendEmail({
           to: 'peaceandlockgarage@gmail.com',
-          from: 'team@peaceandlockgarage.com', // Updated email domain
-          replyTo: booking.email, // Allow team to reply directly to customer
+          from: 'team@peaceandlockgarage.com',
+          replyTo: booking.email && booking.email.trim() !== '' ? booking.email : 'noreply@peaceandlockgarage.com',
           subject: `NEW ${booking.urgency.toUpperCase()} PRIORITY REQUEST - ${booking.serviceType}`,
           html: getLeadNotificationTemplate(emailData)
         })
-      ]).then(results => {
-        const [customerResult, teamResult] = results;
+      );
 
-        if (customerResult.status === 'rejected') {
-          console.error('Failed to send customer confirmation email:', customerResult.reason);
-        } else if (!customerResult.value) {
-          console.error('Customer confirmation email failed to send');
-        } else {
-          console.log('Customer confirmation email sent successfully');
-        }
+      Promise.allSettled(emailPromises).then(results => {
+        let customerSent = false;
+        let teamSent = false;
 
-        if (teamResult.status === 'rejected') {
-          console.error('Failed to send team notification email:', teamResult.reason);
-        } else if (!teamResult.value) {
-          console.error('Team notification email failed to send');
-        } else {
-          console.log('Team notification email sent successfully');
-        }
+        results.forEach((result, index) => {
+          if (result.status === 'fulfilled') {
+            if (booking.email && booking.email.trim() !== '' && index === 0) {
+              console.log('Customer confirmation email sent successfully');
+              customerSent = true;
+            } else if ((booking.email && booking.email.trim() !== '' && index === 1) || (!booking.email && index === 0)) {
+              console.log('Team notification email sent successfully');
+              teamSent = true;
+            }
+          } else {
+            if (booking.email && booking.email.trim() !== '' && index === 0) {
+              console.error('Failed to send customer confirmation email:', result.reason);
+            } else {
+              console.error('Failed to send team notification email:', result.reason);
+            }
+          }
+        });
       });
 
       res.status(201).json({

@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import heroImage from "@assets/generated_images/garage_door_repair_technician_707b350f.png";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { loadRecaptcha, executeRecaptcha } from "@/utils/recaptcha";
 
 export default function Hero() {
   const { toast } = useToast();
@@ -15,6 +16,10 @@ export default function Hero() {
     serviceType: '',
     description: ''
   });
+
+  useEffect(() => {
+    loadRecaptcha();
+  }, []);
 
   const scrollToBooking = () => {
     document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
@@ -32,6 +37,18 @@ export default function Hero() {
     setIsSubmitting(true);
 
     try {
+      // Execute reCAPTCHA
+      const recaptchaToken = await executeRecaptcha('hero_form_submit');
+
+      if (!recaptchaToken) {
+        toast({
+          title: "Verification Failed",
+          description: "Please try again or call us directly at (201) 431-3480.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       // Convert hero form data to booking format
       const [firstName, ...lastNameParts] = formData.name.split(' ');
       const bookingData = {
@@ -55,7 +72,10 @@ export default function Hero() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(bookingData),
+        body: JSON.stringify({
+          ...bookingData,
+          recaptchaToken
+        }),
       });
 
       if (!response.ok) {
