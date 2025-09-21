@@ -64,9 +64,20 @@ export default function BookingForm() {
         },
         body: JSON.stringify(formData),
       });
-      
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        console.error('Non-JSON response:', text);
+        throw new Error('Server returned non-JSON response');
+      }
+
       const result = await response.json();
-      
+
       if (result.success) {
         toast({
           title: "Service Request Submitted!",
@@ -102,9 +113,20 @@ export default function BookingForm() {
       }
     } catch (error) {
       console.error('Form submission error:', error);
+
+      // More specific error messaging
+      let errorMessage = "Unable to submit your request. Please try again or call us directly.";
+      if (error instanceof Error) {
+        if (error.message.includes('non-JSON')) {
+          errorMessage = "Server configuration error. Please call us directly at (201) 431-3480.";
+        } else if (error.message.includes('HTTP error')) {
+          errorMessage = "Server error occurred. Please try again in a moment.";
+        }
+      }
+
       toast({
-        title: "Network Error",
-        description: "Unable to submit your request. Please try again or call us directly.",
+        title: "Submission Error",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
