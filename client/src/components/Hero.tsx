@@ -26,14 +26,14 @@ export default function Hero() {
           {/* Hero Content */}
           <div className="text-center lg:text-left">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              Garage Door Repair Near Me
-              <span className="text-primary block">Emergency Service</span>
-              <span className="text-secondary block">New Jersey Licensed</span>
+              Garage Door Repair
+              <span className="text-primary block">Englewood, NJ</span>
+              <span className="text-secondary block">24/7 Emergency Service</span>
             </h1>
-            
+
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl">
-              New Jersey's trusted garage door spring repair & installation experts. Licensed professionals providing 
-              emergency garage door repair, opener installation, and broken garage door service since 2009.
+              Englewood's trusted garage door repair specialists. Licensed professionals providing
+              24/7 emergency garage door repair, spring replacement, opener installation, and broken garage door service throughout Englewood and Bergen County.
             </p>
 
             {/* Trust Indicators */}
@@ -44,11 +44,11 @@ export default function Hero() {
               </div>
               <div className="flex items-center text-sm text-muted-foreground">
                 <Clock className="w-4 h-4 mr-2 text-secondary" />
-                Professional Service
+                24/7 Emergency Service
               </div>
               <div className="flex items-center text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4 mr-2 text-secondary" />
-                Serving All NJ
+                Englewood & Bergen County
               </div>
             </div>
 
@@ -76,7 +76,7 @@ export default function Hero() {
             </div>
 
             <p className="text-sm text-muted-foreground mt-4">
-              Licensed & Insured • Local NJ Experts • Trusted Technicians
+              Licensed & Insured • Englewood Local Experts • 24/7 Availability
             </p>
           </div>
 
