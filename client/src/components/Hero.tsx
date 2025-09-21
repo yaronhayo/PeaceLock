@@ -9,13 +9,16 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[80vh] flex items-center">
-      {/* Background Image with Overlay */}
-      <div 
+    <section className="relative min-h-[80vh] flex items-center overflow-hidden">
+      {/* Background Image with Overlay and Animated Elements */}
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60"></div>
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-orange-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-orange-600/5 rounded-full blur-2xl animate-spin" style={{animationDuration: '30s'}}></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -51,20 +54,20 @@ export default function Hero() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button 
+              <Button
                 size="lg"
                 onClick={scrollToBooking}
-                className="text-lg px-8 py-3"
+                className="text-lg px-8 py-3 bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 group"
                 data-testid="hero-button-book"
               >
-                <Calendar className="w-5 h-5 mr-2" />
+                <Calendar className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
                 Book a Service
               </Button>
-              <Button 
-                variant="secondary" 
+              <Button
+                variant="secondary"
                 size="lg"
                 onClick={() => window.open('tel:(201) 431-3480')}
-                className="text-lg px-8 py-3"
+                className="text-lg px-8 py-3 border-2 hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 data-testid="hero-button-call"
               >
                 <Phone className="w-5 h-5 mr-2" />

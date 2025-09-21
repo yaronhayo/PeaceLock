@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 border-b">
-      <div className="container mx-auto px-4 py-3">
+      <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <button 
@@ -26,7 +26,14 @@ export default function Header() {
             className="flex items-center hover:opacity-80 transition-opacity"
             data-testid="logo-button"
           >
-            <img src={logoImage} alt="Peace & Lock" className="h-12 w-auto" />
+            <div className="relative group">
+              <img
+                src={logoImage}
+                alt="Peace & Lock"
+                className="h-16 w-auto transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+            </div>
           </button>
 
           {/* Desktop Navigation */}
