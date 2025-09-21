@@ -2,26 +2,28 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["dist/**"]
-      }
+      "src": "api/bookings.ts",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "dist/public/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/dist/index.js"
+      "src": "/api/bookings",
+      "dest": "/api/bookings"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/dist/public/assets/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/dist/index.js"
+      "dest": "/dist/public/index.html"
     }
   ],
-  "functions": {
-    "dist/index.js": {
-      "includeFiles": "dist/public/**"
-    }
-  }
+  "cleanUrls": false,
+  "trailingSlash": false
 }
