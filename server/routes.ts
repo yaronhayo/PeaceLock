@@ -38,13 +38,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       Promise.allSettled([
         sendEmail({
           to: booking.email,
-          from: 'noreply@peaceandlock.com', // You can update this to your verified sender
+          from: 'gettmarketing101@gmail.com', // Using verified sender
           subject: 'Service Request Confirmation - Peace & Lock',
           html: getCustomerConfirmationTemplate(emailData)
         }),
         sendEmail({
-          to: 'team@peaceandlock.com', // Update this to your team email
-          from: 'noreply@peaceandlock.com', // You can update this to your verified sender
+          to: 'gettmarketing101@gmail.com',
+          from: 'gettmarketing101@gmail.com', // Using verified sender
           replyTo: booking.email, // Allow team to reply directly to customer
           subject: `NEW ${booking.urgency.toUpperCase()} PRIORITY REQUEST - ${booking.serviceType}`,
           html: getLeadNotificationTemplate(emailData)
