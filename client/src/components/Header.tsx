@@ -16,12 +16,8 @@ export default function Header() {
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center">
             <img src={logoImage} alt="Peace & Lock" className="h-12 w-auto" />
-            <div>
-              <h1 className="text-xl font-bold text-foreground">Peace & Lock</h1>
-              <p className="text-sm text-muted-foreground">NJ License #13VH13566900</p>
-            </div>
           </div>
 
           {/* Desktop Navigation */}
@@ -41,18 +37,25 @@ export default function Header() {
               Service Areas
             </button>
             <button 
+              onClick={() => scrollToSection('faq')}
+              className="text-foreground hover:text-primary transition-colors"
+              data-testid="nav-faq"
+            >
+              FAQ
+            </button>
+            <button 
+              onClick={() => scrollToSection('reviews')}
+              className="text-foreground hover:text-primary transition-colors"
+              data-testid="nav-reviews"
+            >
+              Reviews
+            </button>
+            <button 
               onClick={() => scrollToSection('about')}
               className="text-foreground hover:text-primary transition-colors"
               data-testid="nav-about"
             >
               About
-            </button>
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className="text-foreground hover:text-primary transition-colors"
-              data-testid="nav-contact"
-            >
-              Contact
             </button>
           </nav>
 
@@ -108,18 +111,25 @@ export default function Header() {
                 Service Areas
               </button>
               <button 
+                onClick={() => scrollToSection('faq')}
+                className="text-left text-foreground hover:text-primary transition-colors py-2"
+                data-testid="mobile-nav-faq"
+              >
+                FAQ
+              </button>
+              <button 
+                onClick={() => scrollToSection('reviews')}
+                className="text-left text-foreground hover:text-primary transition-colors py-2"
+                data-testid="mobile-nav-reviews"
+              >
+                Reviews
+              </button>
+              <button 
                 onClick={() => scrollToSection('about')}
                 className="text-left text-foreground hover:text-primary transition-colors py-2"
                 data-testid="mobile-nav-about"
               >
                 About
-              </button>
-              <button 
-                onClick={() => scrollToSection('contact')}
-                className="text-left text-foreground hover:text-primary transition-colors py-2"
-                data-testid="mobile-nav-contact"
-              >
-                Contact
               </button>
               <div className="flex flex-col space-y-2 pt-2">
                 <Button 
