@@ -2,6 +2,11 @@
 export const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 export const loadRecaptcha = () => {
+  if (!RECAPTCHA_SITE_KEY) {
+    console.warn('reCAPTCHA site key not configured');
+    return;
+  }
+
   if (typeof window !== 'undefined' && !window.grecaptcha) {
     const script = document.createElement('script');
     script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
@@ -13,6 +18,12 @@ export const loadRecaptcha = () => {
 
 export const executeRecaptcha = async (action: string): Promise<string> => {
   return new Promise((resolve, reject) => {
+    if (!RECAPTCHA_SITE_KEY) {
+      console.warn('reCAPTCHA site key not configured, returning dummy token');
+      resolve('development-token');
+      return;
+    }
+
     if (window.grecaptcha && window.grecaptcha.ready) {
       window.grecaptcha.ready(() => {
         window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action }).then(resolve).catch(reject);
