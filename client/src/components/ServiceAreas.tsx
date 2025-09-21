@@ -161,7 +161,7 @@ export default function ServiceAreas() {
                 </h4>
                 <div className="rounded-lg overflow-hidden border">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m76!1m12!1m3!1d387961.45!2d-74.30!3d40.70!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m61!3e6!4m5!1s0x89c2994babce7171%3A0x4a1c5c3c8f5e9a5b!2sHackensack%2C%20NJ!3m2!1d40.8859321!2d-74.0429016!4m5!1s0x89c2ec7c2e4f7d7f%3A0x5a5e6b3c9a8b7c6d!2sParamus%2C%20NJ!3m2!1d40.9445087!2d-74.0654228!4m5!1s0x89c2f625b7f8c8d1%3A0x8c5d6e7f9a0b1c2d!2sFort%20Lee%2C%20NJ!3m2!1d40.8507099!2d-73.9700539!4m5!1s0x89c2f6a1b2c3d4e5%3A0xa1b2c3d4e5f60708!2sJersey%20City%2C%20NJ!3m2!1d40.7281575!2d-74.0776417!4m5!1s0x89c258e3d7e9f4a5%3A0xb6c7d8e9fa0b1c2d!2sNewark%2C%20NJ!3m2!1d40.735657!2d-74.1723667!4m5!1s0x89c25a69a3d6f7e8%3A0xc8d9eaf0b1c2d3e4!2sPaterson%2C%20NJ!3m2!1d40.9167654!2d-74.1709417!4m5!1s0x89c39959c2bbdf2f%3A0x5b6c7d8e9fa0b1c2!2sMorristown%2C%20NJ!3m2!1d40.7967735!2d-74.4815133!4m5!1s0x89c184c5f5c7e8d9%3A0xeaf0b1c2d3e4f567!2sElizabeth%2C%20NJ!3m2!1d40.6639916!2d-74.2107006!5e0!3m2!1sen!2sus!4v1682000000000!5m2!1sen!2sus"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193956.13568511855!2d-74.45678063476562!3d40.697670249999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20Jersey!5e0!3m2!1sen!2sus!4v1642000000000!5m2!1sen!2sus"
                     width="100%"
                     height="300"
                     style={{ border: 0 }}
@@ -173,7 +173,7 @@ export default function ServiceAreas() {
                   ></iframe>
                 </div>
                 <p className="text-center text-muted-foreground text-sm mt-3">
-                  Interactive map showing our key service cities across New Jersey
+                  Interactive map showing our comprehensive service coverage across New Jersey
                 </p>
               </CardContent>
             </Card>
