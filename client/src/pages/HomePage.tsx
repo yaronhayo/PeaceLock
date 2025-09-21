@@ -17,11 +17,10 @@ export default function HomePage() {
         <Hero />
         <Services />
         <ServiceAreas />
-        <Reviews />
         <About />
         <FAQ />
+        <Reviews />
         <BookingForm />
-        <Contact />
       </main>
       <Footer />
     </div>

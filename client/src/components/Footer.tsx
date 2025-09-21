@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
-          <div className="lg:col-span-2">
+          <div>
             <div className="flex items-center space-x-3 mb-4">
               <img src={logoImage} alt="Peace & Lock" className="h-10 w-auto" />
               <div>
@@ -21,18 +21,30 @@ export default function Footer() {
               New Jersey's trusted garage door repair and installation experts. 
               Serving communities throughout NJ with professional, reliable service since 2009.
             </p>
-            <div className="space-y-2">
-              <div className="flex items-center text-sm">
-                <Phone className="w-4 h-4 mr-2 text-primary" />
-                <span>(201) 431-3480</span>
-              </div>
-              <div className="flex items-center text-sm">
-                <Mail className="w-4 h-4 mr-2 text-primary" />
-                <span>support@peaceandlocknj.com</span>
-              </div>
-              <div className="flex items-center text-sm">
-                <MapPin className="w-4 h-4 mr-2 text-primary" />
-                <span>Serving all of New Jersey</span>
+            <div className="text-center md:text-left">
+              <p className="text-sm text-muted-foreground mb-3">Follow us for tips and updates:</p>
+              <div className="flex justify-center md:justify-start space-x-4">
+                <button 
+                  className="p-2 hover:bg-primary/10 rounded-full transition-colors"
+                  data-testid="footer-social-facebook"
+                  onClick={() => console.log('Facebook link clicked')}
+                >
+                  <Facebook className="w-5 h-5 text-muted-foreground hover:text-primary" />
+                </button>
+                <button 
+                  className="p-2 hover:bg-primary/10 rounded-full transition-colors"
+                  data-testid="footer-social-twitter"
+                  onClick={() => console.log('Twitter link clicked')}
+                >
+                  <Twitter className="w-5 h-5 text-muted-foreground hover:text-primary" />
+                </button>
+                <button 
+                  className="p-2 hover:bg-primary/10 rounded-full transition-colors"
+                  data-testid="footer-social-instagram"
+                  onClick={() => console.log('Instagram link clicked')}
+                >
+                  <Instagram className="w-5 h-5 text-muted-foreground hover:text-primary" />
+                </button>
               </div>
             </div>
           </div>
@@ -89,6 +101,34 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Contact Info */}
+          <div>
+            <h4 className="font-semibold mb-4">Contact Info</h4>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-center">
+                <Phone className="w-4 h-4 mr-2 text-primary" />
+                <span>(201) 431-3480</span>
+              </div>
+              <div className="flex items-center">
+                <Mail className="w-4 h-4 mr-2 text-primary" />
+                <span>support@peaceandlocknj.com</span>
+              </div>
+              <div className="flex items-center">
+                <MapPin className="w-4 h-4 mr-2 text-primary" />
+                <span>Serving all of New Jersey</span>
+              </div>
+              <div className="flex items-center">
+                <Clock className="w-4 h-4 mr-2 text-primary" />
+                <div>
+                  <p>Mon-Fri: 7:00 AM - 7:00 PM</p>
+                  <p>Sat: 8:00 AM - 5:00 PM</p>
+                  <p>Sun: 9:00 AM - 3:00 PM</p>
+                  <p className="text-primary font-medium">Emergency Service Available</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Quick Links */}
           <div>
             <h4 className="font-semibold mb-4">Quick Links</h4>
@@ -113,11 +153,11 @@ export default function Footer() {
               </li>
               <li>
                 <button 
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' })}
                   className="hover:text-primary transition-colors"
-                  data-testid="footer-link-contact"
+                  data-testid="footer-link-faq"
                 >
-                  Contact Us
+                  FAQ
                 </button>
               </li>
               <li>
@@ -142,50 +182,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Business Hours */}
-        <div className="mt-8 pt-8 border-t">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h4 className="font-semibold mb-3 flex items-center">
-                <Clock className="w-4 h-4 mr-2 text-primary" />
-                Business Hours
-              </h4>
-              <div className="text-sm text-muted-foreground space-y-1">
-                <p>Monday - Friday: 7:00 AM - 7:00 PM</p>
-                <p>Saturday: 8:00 AM - 5:00 PM</p>
-                <p>Sunday: 9:00 AM - 3:00 PM</p>
-                <p className="text-primary font-medium">Emergency Service Available</p>
-              </div>
-            </div>
-            
-            <div className="text-center md:text-right">
-              <p className="text-sm text-muted-foreground mb-3">Follow us for tips and updates:</p>
-              <div className="flex justify-center md:justify-end space-x-4">
-                <button 
-                  className="p-2 hover:bg-primary/10 rounded-full transition-colors"
-                  data-testid="footer-social-facebook"
-                  onClick={() => console.log('Facebook link clicked')}
-                >
-                  <Facebook className="w-5 h-5 text-muted-foreground hover:text-primary" />
-                </button>
-                <button 
-                  className="p-2 hover:bg-primary/10 rounded-full transition-colors"
-                  data-testid="footer-social-twitter"
-                  onClick={() => console.log('Twitter link clicked')}
-                >
-                  <Twitter className="w-5 h-5 text-muted-foreground hover:text-primary" />
-                </button>
-                <button 
-                  className="p-2 hover:bg-primary/10 rounded-full transition-colors"
-                  data-testid="footer-social-instagram"
-                  onClick={() => console.log('Instagram link clicked')}
-                >
-                  <Instagram className="w-5 h-5 text-muted-foreground hover:text-primary" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Bottom Bar */}
         <div className="mt-8 pt-8 border-t">
