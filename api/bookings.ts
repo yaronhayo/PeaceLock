@@ -50,6 +50,14 @@ async function sendEmail(params: {
 
   try {
     console.log('Attempting to send email via SendGrid...');
+    console.log('Email payload:', {
+      to: params.to,
+      from: params.from,
+      subject: params.subject,
+      hasHtml: !!params.html,
+      replyTo: params.replyTo
+    });
+
     const result = await mailService.send({
       to: params.to,
       from: params.from,
@@ -57,14 +65,21 @@ async function sendEmail(params: {
       html: params.html,
       replyTo: params.replyTo
     });
-    console.log('SendGrid send result:', result);
+
+    console.log('✅ SendGrid SUCCESS:', {
+      statusCode: result[0]?.statusCode,
+      messageId: result[0]?.headers?.['x-message-id'],
+      timestamp: new Date().toISOString()
+    });
     return true;
   } catch (error: any) {
-    console.error('SendGrid email error:', {
+    console.error('❌ SendGrid ERROR:', {
       message: error.message,
       code: error.code,
-      response: error.response?.body,
-      stack: error.stack
+      statusCode: error.code,
+      responseBody: error.response?.body,
+      responseHeaders: error.response?.headers,
+      stack: error.stack?.split('\n').slice(0, 3).join('\n')
     });
     return false;
   }
@@ -241,17 +256,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         })
       );
 
-      // Process emails asynchronously
+      // Process emails with timeout
+      console.log(`Processing ${emailPromises.length} email promises...`);
+
+      const emailTimeout = setTimeout(() => {
+        console.warn('⚠️  Email sending taking longer than 10 seconds...');
+      }, 10000);
+
       Promise.allSettled(emailPromises).then(results => {
-        console.log('Email results:', results.map(r => r.status));
+        clearTimeout(emailTimeout);
+        console.log('📧 Email processing complete:', {
+          total: results.length,
+          fulfilled: results.filter(r => r.status === 'fulfilled').length,
+          rejected: results.filter(r => r.status === 'rejected').length
+        });
+
         results.forEach((result, index) => {
+          const emailType = index === 0 && req.body.email ? 'Customer' : 'Team';
           if (result.status === 'fulfilled') {
-            console.log(`Email ${index + 1} sent successfully`);
+            console.log(`✅ ${emailType} email sent successfully`);
           } else {
-            console.error(`Email ${index + 1} failed:`, result.reason);
+            console.error(`❌ ${emailType} email failed:`, result.reason?.message || result.reason);
           }
         });
-      }).catch(err => console.error('Email promise error:', err));
+      }).catch(err => {
+        clearTimeout(emailTimeout);
+        console.error('💥 Email promise error:', err);
+      });
 
       res.status(200).json({
         success: true,
