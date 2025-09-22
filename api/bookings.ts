@@ -58,21 +58,13 @@ async function sendEmail(params: {
       replyTo: params.replyTo
     });
 
-    // Add explicit timeout to catch hanging calls
-    const sendPromise = mailService.send({
+    const result = await mailService.send({
       to: params.to,
       from: params.from,
       subject: params.subject,
       html: params.html,
       replyTo: params.replyTo
     });
-
-    // Race between send and timeout
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('SendGrid API call timeout after 8 seconds')), 8000);
-    });
-
-    const result = await Promise.race([sendPromise, timeoutPromise]);
 
     console.log('✅ SendGrid SUCCESS:', {
       statusCode: result[0]?.statusCode,
