@@ -86,44 +86,87 @@ async function sendEmail(params: {
 }
 
 // Customer email template
-function getCustomerTemplate(data: { customerName: string; serviceType: string; urgency: string; phone: string; address: string; description?: string; }) {
+function getCustomerTemplate(data: { customerName: string; serviceType: string; urgency: string; phone: string; address: string; description?: string; submittedAt: string; }) {
   return `
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>Service Request Confirmation</title></head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px;">
-  <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-    <div style="background: linear-gradient(135deg, #f97316, #ea580c); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
-      <h1 style="margin: 0; font-size: 28px;">Peace & Lock</h1>
-      <p style="margin: 10px 0 0 0; font-size: 16px;">Professional Garage Door Services</p>
-    </div>
-    <div style="padding: 30px;">
-      <h2 style="color: #f97316; margin-top: 0;">Thank you, ${escapeHtml(data.customerName)}!</h2>
-      <p>We've received your service request for ${escapeHtml(data.serviceType.toLowerCase())} service.</p>
-      <div style="background: #f8f9fa; border-left: 4px solid #f97316; padding: 20px; margin: 20px 0;">
-        <h3 style="margin-top: 0;">Your Service Request Details</h3>
-        <p><strong>Service Type:</strong> ${escapeHtml(data.serviceType)}</p>
-        <p><strong>Urgency:</strong> ${escapeHtml(data.urgency)}</p>
-        <p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>
-        <p><strong>Address:</strong> ${escapeHtml(data.address)}</p>
-        ${data.description ? `<p><strong>Description:</strong> ${escapeHtml(data.description)}</p>` : ''}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Request Confirmation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+  </style>
+</head>
+<body style="font-family: 'Space Grotesk', Arial, sans-serif; line-height: 1.6; color: #1f2937; margin: 0; padding: 20px; background: #f9fafb;">
+  <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
+    <!-- Header -->
+    <div style="background: linear-gradient(135deg, #d97706 0%, #ea580c 100%); color: white; padding: 40px 30px; text-align: center; position: relative;">
+      <div style="background: rgba(255,255,255,0.1); width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+        <span style="font-size: 32px; font-weight: 700;">🔒</span>
       </div>
-      <div style="background: #ecfdf5; border: 1px solid #10b981; border-radius: 6px; padding: 20px; margin: 25px 0;">
-        <h3 style="color: #10b981; margin-top: 0;">What Happens Next?</h3>
-        <ul>
-          <li>Our team will review your request promptly</li>
-          <li>We'll call you to schedule a convenient time</li>
-          <li>Our licensed technician will provide professional service</li>
+      <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">Peace & Lock</h1>
+      <p style="margin: 8px 0 0 0; font-size: 16px; opacity: 0.9;">Professional Garage Door Services</p>
+    </div>
+
+    <!-- Main Content -->
+    <div style="padding: 40px 30px;">
+      <div style="text-align: center; margin-bottom: 30px;">
+        <div style="background: #dcfce7; color: #166534; padding: 12px 24px; border-radius: 50px; display: inline-block; font-weight: 600; font-size: 14px; margin-bottom: 20px;">
+          ✓ REQUEST CONFIRMED
+        </div>
+        <h2 style="color: #1f2937; margin: 0; font-size: 24px; font-weight: 600;">Thank you, ${escapeHtml(data.customerName)}!</h2>
+        <p style="color: #6b7280; margin: 8px 0 0 0;">We've received your service request and our team is on it.</p>
+      </div>
+
+      <!-- Service Details Card -->
+      <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin: 24px 0;">
+        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+          <div style="background: #d97706; color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+            <span style="font-size: 16px; font-weight: 600;">📝</span>
+          </div>
+          <h3 style="margin: 0; font-size: 18px; font-weight: 600; color: #1f2937;">Service Request Details</h3>
+        </div>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500;">Service Type:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.serviceType)}</td></tr>
+          <tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500;">Urgency Level:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.urgency.charAt(0).toUpperCase() + data.urgency.slice(1))}</td></tr>
+          <tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500;">Phone:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.phone)}</td></tr>
+          <tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500;">Address:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.address)}</td></tr>
+          <tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500;">Submitted:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${data.submittedAt}</td></tr>
+          ${data.description ? `<tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500; vertical-align: top;">Description:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.description)}</td></tr>` : ''}
+        </table>
+      </div>
+
+      <!-- Next Steps -->
+      <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1px solid #a7f3d0; border-radius: 12px; padding: 24px; margin: 24px 0;">
+        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+          <div style="background: #059669; color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+            <span style="font-size: 16px;">📋</span>
+          </div>
+          <h3 style="color: #059669; margin: 0; font-size: 18px; font-weight: 600;">What Happens Next?</h3>
+        </div>
+        <ul style="margin: 0; padding-left: 0; list-style: none;">
+          <li style="padding: 8px 0; display: flex; align-items: center;"><span style="color: #059669; margin-right: 12px; font-size: 16px;">✓</span>Our team will review your request within 30 minutes</li>
+          <li style="padding: 8px 0; display: flex; align-items: center;"><span style="color: #059669; margin-right: 12px; font-size: 16px;">✓</span>We'll call you to schedule a convenient appointment time</li>
+          <li style="padding: 8px 0; display: flex; align-items: center;"><span style="color: #059669; margin-right: 12px; font-size: 16px;">✓</span>Our licensed technician will provide professional service</li>
         </ul>
       </div>
-      <div style="background: #f0f9ff; padding: 20px; text-align: center; border-radius: 6px;">
-        <h3 style="margin-top: 0;">Need to reach us?</h3>
-        <p style="font-size: 24px; font-weight: bold; color: #f97316; margin: 10px 0;">(201) 431-3480</p>
-        <p style="margin: 0;">Available 24/7 for emergency services</p>
+
+      <!-- Contact Information -->
+      <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #93c5fd; border-radius: 12px; padding: 24px; text-align: center; margin: 24px 0;">
+        <h3 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 600; color: #1e40af;">Need to reach us immediately?</h3>
+        <div style="background: #1e40af; color: white; padding: 16px; border-radius: 8px; margin: 16px 0;">
+          <p style="font-size: 28px; font-weight: 700; margin: 0; letter-spacing: -0.5px;">(201) 431-3480</p>
+        </div>
+        <p style="margin: 0; color: #1e40af; font-weight: 500;">Available 24/7 for emergency services</p>
       </div>
     </div>
-    <div style="background: #374151; color: white; padding: 20px; text-align: center; border-radius: 0 0 8px 8px;">
-      <p><strong>Peace & Lock</strong> | NJ License #13VH13566900</p>
+
+    <!-- Footer -->
+    <div style="background: #1f2937; color: #e5e7eb; padding: 24px; text-align: center;">
+      <p style="margin: 0; font-weight: 600; font-size: 16px;">Peace & Lock</p>
+      <p style="margin: 4px 0 0 0; opacity: 0.8; font-size: 14px;">NJ License #13VH13566900</p>
+      <p style="margin: 8px 0 0 0; opacity: 0.8; font-size: 14px;">Professional • Licensed • Insured</p>
     </div>
   </div>
 </body>
@@ -131,36 +174,86 @@ function getCustomerTemplate(data: { customerName: string; serviceType: string; 
 }
 
 // Team notification template
-function getTeamTemplate(data: { customerName: string; email: string; phone: string; serviceType: string; urgency: string; address: string; description?: string; }) {
+function getTeamTemplate(data: { customerName: string; email: string; phone: string; serviceType: string; urgency: string; address: string; description?: string; submittedAt: string; userAgent?: string; ipAddress?: string; referrer?: string; }) {
+  const urgencyConfig = {
+    emergency: { color: '#dc2626', bgColor: '#fee2e2', borderColor: '#fca5a5', icon: '🚨' },
+    urgent: { color: '#ea580c', bgColor: '#fed7aa', borderColor: '#fdba74', icon: '⚡' },
+    normal: { color: '#059669', bgColor: '#d1fae5', borderColor: '#a7f3d0', icon: '📝' }
+  };
+  const config = urgencyConfig[data.urgency as keyof typeof urgencyConfig] || urgencyConfig.normal;
+
   return `
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>New Service Request</title></head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px;">
-  <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-    <div style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
-      <div style="background: #fef2f2; color: #dc2626; padding: 8px 16px; border-radius: 20px; font-weight: 600; margin-bottom: 15px; display: inline-block;">
-        NEW SERVICE REQUEST
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Service Request Alert</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+  </style>
+</head>
+<body style="font-family: 'Space Grotesk', Arial, sans-serif; line-height: 1.6; color: #1f2937; margin: 0; padding: 20px; background: #f9fafb;">
+  <div style="max-width: 700px; margin: 0 auto; background: #ffffff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
+    <!-- Alert Header -->
+    <div style="background: linear-gradient(135deg, ${config.color} 0%, #7f1d1d 100%); color: white; padding: 30px; text-align: center; position: relative;">
+      <div style="background: rgba(255,255,255,0.1); padding: 12px 24px; border-radius: 50px; font-weight: 700; margin-bottom: 16px; display: inline-block; font-size: 14px; letter-spacing: 0.5px;">
+        ${config.icon} NEW SERVICE REQUEST
       </div>
-      <h2 style="margin: 0;">Peace & Lock Team Alert</h2>
+      <h1 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">Peace & Lock Team Alert</h1>
+      <p style="margin: 8px 0 0 0; opacity: 0.9;">Immediate action required</p>
     </div>
-    <div style="padding: 25px;">
-      <div style="background: #fee2e2; color: #dc2626; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 20px; font-weight: 600; border: 2px solid #fca5a5;">
-        ${escapeHtml(data.urgency.toUpperCase())} PRIORITY REQUEST
+
+    <!-- Priority Banner -->
+    <div style="background: ${config.bgColor}; color: ${config.color}; padding: 20px; text-align: center; font-weight: 700; font-size: 18px; border: 2px solid ${config.borderColor}; margin: 0;">
+      ${config.icon} ${escapeHtml(data.urgency.toUpperCase())} PRIORITY REQUEST ${config.icon}
+    </div>
+
+    <div style="padding: 40px 30px;">
+      <!-- Customer Information Card -->
+      <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin: 0 0 24px 0;">
+        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+          <div style="background: #d97706; color: white; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
+            <span style="font-size: 20px;">👤</span>
+          </div>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 600; color: #1f2937;">Customer Information</h3>
+        </div>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500; width: 120px;">Name:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 600; font-size: 16px;">${escapeHtml(data.customerName)}</td></tr>
+          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500;">Phone:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 700; font-size: 18px;"><a href="tel:${escapeHtml(data.phone)}" style="color: #dc2626; text-decoration: none;">${escapeHtml(data.phone)}</a></td></tr>
+          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500;">Email:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 600;"><a href="mailto:${escapeHtml(data.email)}" style="color: #1e40af; text-decoration: none;">${escapeHtml(data.email)}</a></td></tr>
+          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500;">Service:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 700; font-size: 16px;">${escapeHtml(data.serviceType)}</td></tr>
+          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500;">Address:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.address)}</td></tr>
+          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500;">Submitted:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 600;">${data.submittedAt}</td></tr>
+          ${data.description ? `<tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500; vertical-align: top;">Description:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 600; background: #f1f5f9; padding: 12px; border-radius: 6px; border-left: 3px solid #3b82f6;">${escapeHtml(data.description)}</td></tr>` : ''}
+        </table>
       </div>
-      <div style="background: #f8f9fa; border-left: 4px solid #f97316; padding: 20px; margin: 20px 0;">
-        <h3 style="margin-top: 0;">Customer Information</h3>
-        <p><strong>Name:</strong> ${escapeHtml(data.customerName)}</p>
-        <p><strong>Phone:</strong> <strong>${escapeHtml(data.phone)}</strong></p>
-        <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
-        <p><strong>Service:</strong> <strong>${escapeHtml(data.serviceType)}</strong></p>
-        <p><strong>Address:</strong> ${escapeHtml(data.address)}</p>
-        ${data.description ? `<p><strong>Description:</strong> ${escapeHtml(data.description)}</p>` : ''}
+
+      <!-- Action Buttons -->
+      <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #93c5fd; border-radius: 12px; padding: 24px; text-align: center; margin: 24px 0;">
+        <h3 style="margin: 0 0 20px 0; color: #1e40af; font-size: 18px; font-weight: 600;">Quick Actions</h3>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <a href="tel:${escapeHtml(data.phone)}" style="display: inline-block; padding: 14px 28px; background: #dc2626; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);">📞 Call Customer</a>
+          <a href="mailto:${escapeHtml(data.email)}" style="display: inline-block; padding: 14px 28px; background: #1e40af; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 2px 4px rgba(30, 64, 175, 0.2);">✉️ Email Customer</a>
+        </div>
       </div>
-      <div style="text-align: center; margin: 25px 0;">
-        <a href="tel:${escapeHtml(data.phone)}" style="display: inline-block; padding: 12px 24px; margin: 5px; background: #f97316; color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">Call Customer</a>
-        <a href="mailto:${escapeHtml(data.email)}" style="display: inline-block; padding: 12px 24px; margin: 5px; background: #6b7280; color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">Email Customer</a>
-      </div>
+
+      <!-- Session Information -->
+      ${data.userAgent || data.ipAddress || data.referrer ? `
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 24px 0;">
+        <h3 style="margin: 0 0 16px 0; color: #6b7280; font-size: 16px; font-weight: 600;">🌐 Session Information</h3>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+          ${data.ipAddress ? `<tr><td style="padding: 6px 0; color: #6b7280; font-weight: 500;">IP Address:</td><td style="padding: 6px 0; color: #1f2937; font-family: monospace;">${escapeHtml(data.ipAddress)}</td></tr>` : ''}
+          ${data.userAgent ? `<tr><td style="padding: 6px 0; color: #6b7280; font-weight: 500; vertical-align: top;">User Agent:</td><td style="padding: 6px 0; color: #1f2937; font-family: monospace; word-break: break-all;">${escapeHtml(data.userAgent)}</td></tr>` : ''}
+          ${data.referrer ? `<tr><td style="padding: 6px 0; color: #6b7280; font-weight: 500;">Referrer:</td><td style="padding: 6px 0; color: #1f2937; font-family: monospace;">${escapeHtml(data.referrer)}</td></tr>` : ''}
+        </table>
+      </div>` : ''}
+    </div>
+
+    <!-- Footer -->
+    <div style="background: #1f2937; color: #e5e7eb; padding: 20px; text-align: center;">
+      <p style="margin: 0; font-weight: 600;">Peace & Lock Team Dashboard</p>
+      <p style="margin: 4px 0 0 0; opacity: 0.8; font-size: 14px;">This is an automated notification • Respond promptly</p>
     </div>
   </div>
 </body>
@@ -210,6 +303,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       console.log('Working booking created:', booking);
 
+      // Get current time in Eastern timezone
+      const easternTime = new Date().toLocaleString('en-US', {
+        timeZone: 'America/New_York',
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZoneName: 'short'
+      });
+
+      // Extract session information
+      const userAgent = req.headers['user-agent'] || 'Unknown';
+      const ipAddress = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.connection?.remoteAddress || 'Unknown';
+      const referrer = req.headers.referer || req.headers.referrer || 'Direct';
+
       // Prepare email data
       const emailData = {
         customerName: `${firstName} ${lastName}`,
@@ -217,8 +327,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         phone,
         serviceType,
         urgency: req.body.urgency || 'normal',
-        address: req.body.address || 'TBD',
-        description: req.body.description || 'No description provided'
+        address: `${req.body.address || 'TBD'}, ${req.body.city || ''} ${req.body.zipCode || ''}`.trim(),
+        description: req.body.description || 'No description provided',
+        submittedAt: easternTime,
+        userAgent: Array.isArray(userAgent) ? userAgent[0] : userAgent,
+        ipAddress: Array.isArray(ipAddress) ? ipAddress[0] : ipAddress,
+        referrer: Array.isArray(referrer) ? referrer[0] : referrer
       };
 
       // Send emails sequentially
