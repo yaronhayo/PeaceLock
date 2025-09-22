@@ -93,17 +93,32 @@ function getCustomerTemplate(data: { customerName: string; serviceType: string; 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
   <title>Service Request Confirmation</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      .email-container { background: #1f2937 !important; color: #f9fafb !important; }
+      .content-card { background: #374151 !important; color: #f9fafb !important; }
+      .text-muted { color: #9ca3af !important; }
+      .border-color { border-color: #4b5563 !important; }
+      .info-card { background: #4b5563 !important; border-color: #6b7280 !important; }
+      .success-card { background: #064e3b !important; border-color: #047857 !important; }
+      .contact-card { background: #1e3a8a !important; border-color: #3b82f6 !important; }
+      .footer { background: #111827 !important; }
+    }
   </style>
 </head>
-<body style="font-family: 'Space Grotesk', Arial, sans-serif; line-height: 1.6; color: #1f2937; margin: 0; padding: 20px; background: #f9fafb;">
-  <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
+<body class="email-container" style="font-family: 'Space Grotesk', Arial, sans-serif; line-height: 1.6; color: #1f2937; margin: 0; padding: 20px; background: #f9fafb;">
+  <div class="content-card" style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
     <!-- Header -->
     <div style="background: linear-gradient(135deg, #d97706 0%, #ea580c 100%); color: white; padding: 40px 30px; text-align: center; position: relative;">
-      <div style="background: rgba(255,255,255,0.9); width: 120px; height: 120px; border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box;">
-        <img src="https://peaceandlocknj.com/logo.png" alt="Peace & Lock Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+      <div style="background: rgba(255,255,255,0.95); width: 140px; height: 140px; border-radius: 24px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; padding: 15px; box-sizing: border-box; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        <img src="https://www.peaceandlocknj.com/logo.png" alt="Peace & Lock Logo" style="max-width: 100%; max-height: 100%; object-fit: contain; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <div style="display: none; font-size: 48px; color: #d97706; font-weight: 700;">🔑</div>
       </div>
       <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">Peace & Lock</h1>
       <p style="margin: 8px 0 0 0; font-size: 16px; opacity: 0.9;">Professional Garage Door Services</p>
@@ -120,12 +135,12 @@ function getCustomerTemplate(data: { customerName: string; serviceType: string; 
       </div>
 
       <!-- Service Details Card -->
-      <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin: 24px 0;">
+      <div class="info-card border-color" style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin: 24px 0;">
         <div style="display: flex; align-items: center; margin-bottom: 16px;">
           <div style="background: #d97706; color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
             <span style="font-size: 16px; font-weight: 600;">📝</span>
           </div>
-          <h3 style="margin: 0; font-size: 18px; font-weight: 600; color: #1f2937;">Service Request Details</h3>
+          <h3 class="text-muted" style="margin: 0; font-size: 18px; font-weight: 600; color: #1f2937;">Service Request Details</h3>
         </div>
         <table style="width: 100%; border-collapse: collapse;">
           <tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500;">Service Type:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.serviceType)}</td></tr>
@@ -188,12 +203,26 @@ function getTeamTemplate(data: { customerName: string; email: string; phone: str
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
   <title>New Service Request Alert</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+
+    /* Dark mode support for team notifications */
+    @media (prefers-color-scheme: dark) {
+      .email-container { background: #1f2937 !important; color: #f9fafb !important; }
+      .content-card { background: #374151 !important; color: #f9fafb !important; }
+      .text-muted { color: #9ca3af !important; }
+      .border-color { border-color: #4b5563 !important; }
+      .info-card { background: #4b5563 !important; border-color: #6b7280 !important; }
+      .action-card { background: #1e3a8a !important; border-color: #3b82f6 !important; }
+      .session-card { background: #4b5563 !important; border-color: #6b7280 !important; }
+      .footer { background: #111827 !important; }
+    }
   </style>
 </head>
-<body style="font-family: 'Space Grotesk', Arial, sans-serif; line-height: 1.6; color: #1f2937; margin: 0; padding: 20px; background: #f9fafb;">
+<body class="email-container" style="font-family: 'Space Grotesk', Arial, sans-serif; line-height: 1.6; color: #1f2937; margin: 0; padding: 20px; background: #f9fafb;">
   <div style="max-width: 700px; margin: 0 auto; background: #ffffff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
     <!-- Alert Header -->
     <div style="background: linear-gradient(135deg, ${config.color} 0%, #7f1d1d 100%); color: white; padding: 30px; text-align: center; position: relative;">
@@ -353,19 +382,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         console.log('Customer email result:', customerResult);
       }
 
-      // Team notification
-      console.log('Sending team notification');
-      const teamResult = await sendEmail({
-        to: 'gettmarketing101@gmail.com',
-        from: {
-          email: 'noreply@em6046.peaceandlocknj.com',
-          name: 'Peace & Lock'
-        },
-        replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'noreply@em6046.peaceandlocknj.com',
-        subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
-        html: getTeamTemplate(emailData)
-      });
-      console.log('Team email result:', teamResult);
+      // Team notifications to multiple recipients
+      console.log('Sending team notifications');
+      const teamEmails = [
+        'gettmarketing101@gmail.com',
+        'sandrahmarketing@gmail.com',
+        'peaceandlockgarage@gmail.com'
+      ];
+
+      for (const recipient of teamEmails) {
+        console.log(`Sending team notification to: ${recipient}`);
+        const teamResult = await sendEmail({
+          to: recipient,
+          from: {
+            email: 'noreply@em6046.peaceandlocknj.com',
+            name: 'Peace & Lock'
+          },
+          replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'noreply@em6046.peaceandlocknj.com',
+          subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
+          html: getTeamTemplate(emailData)
+        });
+        console.log(`Team email result for ${recipient}:`, teamResult);
+      }
 
       console.log('📧 Email processing complete');
 
