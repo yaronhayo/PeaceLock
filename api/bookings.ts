@@ -221,68 +221,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         description: req.body.description || 'No description provided'
       };
 
-      // Send emails
+      // Send emails sequentially
       console.log('Starting email sending...');
-      const emailPromises = [];
 
       // Customer confirmation
       if (req.body.email && req.body.email.trim()) {
         console.log('Sending customer email to:', req.body.email);
-        emailPromises.push(
-          sendEmail({
-            to: req.body.email,
-            from: {
-              email: 'noreply@em6046.peaceandlocknj.com',
-              name: 'Peace & Lock'
-            },
-            subject: 'Service Request Confirmation - Peace & Lock',
-            html: getCustomerTemplate(emailData)
-          })
-        );
-      }
-
-      // Team notification
-      console.log('Sending team notification');
-      emailPromises.push(
-        sendEmail({
-          to: 'gettmarketing101@gmail.com',
+        const customerResult = await sendEmail({
+          to: req.body.email,
           from: {
             email: 'noreply@em6046.peaceandlocknj.com',
             name: 'Peace & Lock'
           },
-          replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'noreply@em6046.peaceandlocknj.com',
-          subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
-          html: getTeamTemplate(emailData)
-        })
-      );
-
-      // Process emails with timeout
-      console.log(`Processing ${emailPromises.length} email promises...`);
-
-      const emailTimeout = setTimeout(() => {
-        console.warn('⚠️  Email sending taking longer than 10 seconds...');
-      }, 10000);
-
-      Promise.allSettled(emailPromises).then(results => {
-        clearTimeout(emailTimeout);
-        console.log('📧 Email processing complete:', {
-          total: results.length,
-          fulfilled: results.filter(r => r.status === 'fulfilled').length,
-          rejected: results.filter(r => r.status === 'rejected').length
+          subject: 'Service Request Confirmation - Peace & Lock',
+          html: getCustomerTemplate(emailData)
         });
+        console.log('Customer email result:', customerResult);
+      }
 
-        results.forEach((result, index) => {
-          const emailType = index === 0 && req.body.email ? 'Customer' : 'Team';
-          if (result.status === 'fulfilled') {
-            console.log(`✅ ${emailType} email sent successfully`);
-          } else {
-            console.error(`❌ ${emailType} email failed:`, result.reason?.message || result.reason);
-          }
-        });
-      }).catch(err => {
-        clearTimeout(emailTimeout);
-        console.error('💥 Email promise error:', err);
+      // Team notification
+      console.log('Sending team notification');
+      const teamResult = await sendEmail({
+        to: 'gettmarketing101@gmail.com',
+        from: {
+          email: 'noreply@em6046.peaceandlocknj.com',
+          name: 'Peace & Lock'
+        },
+        replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'noreply@em6046.peaceandlocknj.com',
+        subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
+        html: getTeamTemplate(emailData)
       });
+      console.log('Team email result:', teamResult);
+
+      console.log('📧 Email processing complete');
 
       res.status(200).json({
         success: true,
