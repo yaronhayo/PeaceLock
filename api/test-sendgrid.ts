@@ -34,7 +34,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const testEmail = {
         to: 'gettmarketing101@gmail.com',
         from: {
-          email: 'noreply@em2836.peaceandlocknj.com',
+          email: 'noreply@em6046.peaceandlocknj.com',
           name: 'Peace & Lock Test'
         },
         subject: 'SendGrid Test Email',

@@ -196,6 +196,7 @@ export default function BookingForm() {
                         value={formData.firstName}
                         onChange={handleInputChange}
                         required
+                        autoComplete="given-name"
                         className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-firstname"
                       />
@@ -211,6 +212,7 @@ export default function BookingForm() {
                         value={formData.lastName}
                         onChange={handleInputChange}
                         required
+                        autoComplete="family-name"
                         className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-lastname"
                       />
@@ -226,6 +228,7 @@ export default function BookingForm() {
                         value={formData.phone}
                         onChange={handleInputChange}
                         required
+                        autoComplete="tel"
                         className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-phone"
                       />
@@ -240,6 +243,7 @@ export default function BookingForm() {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
+                        autoComplete="email"
                         className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-email"
                       />
@@ -349,6 +353,7 @@ export default function BookingForm() {
                         value={formData.address}
                         onChange={handleInputChange}
                         required
+                        autoComplete="street-address"
                         className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-address"
                       />
@@ -364,6 +369,7 @@ export default function BookingForm() {
                         value={formData.city}
                         onChange={handleInputChange}
                         required
+                        autoComplete="address-level2"
                         className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-city"
                       />
@@ -379,6 +385,7 @@ export default function BookingForm() {
                         value={formData.zipCode}
                         onChange={handleInputChange}
                         required
+                        autoComplete="postal-code"
                         className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                         data-testid="booking-input-zip"
                       />
