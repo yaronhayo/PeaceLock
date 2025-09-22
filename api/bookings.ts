@@ -93,97 +93,159 @@ function getCustomerTemplate(data: { customerName: string; serviceType: string; 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
-  <meta name="supported-color-schemes" content="light dark">
+  <meta name="x-apple-disable-message-reformatting">
   <title>Service Request Confirmation</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-    /* Dark mode support */
-    @media (prefers-color-scheme: dark) {
-      .email-container { background: #1f2937 !important; color: #f9fafb !important; }
-      .content-card { background: #374151 !important; color: #f9fafb !important; }
-      .text-muted { color: #9ca3af !important; }
-      .border-color { border-color: #4b5563 !important; }
-      .info-card { background: #4b5563 !important; border-color: #6b7280 !important; }
-      .success-card { background: #064e3b !important; border-color: #047857 !important; }
-      .contact-card { background: #1e3a8a !important; border-color: #3b82f6 !important; }
-      .footer { background: #111827 !important; }
+    /* Reset styles */
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; }
+    table { border-collapse: collapse; }
+
+    /* Responsive styles */
+    @media only screen and (max-width: 600px) {
+      .container { width: 100% !important; }
+      .content { padding: 20px !important; }
+      .header { padding: 30px 20px !important; }
     }
   </style>
 </head>
-<body class="email-container" style="font-family: 'Space Grotesk', Arial, sans-serif; line-height: 1.6; color: #1f2937; margin: 0; padding: 20px; background: #f9fafb;">
-  <div class="content-card" style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
-    <!-- Header -->
-    <div style="background: linear-gradient(135deg, #d97706 0%, #ea580c 100%); color: white; padding: 40px 30px; text-align: center; position: relative;">
-      <div style="background: rgba(255,255,255,0.95); width: 140px; height: 140px; border-radius: 24px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; padding: 15px; box-sizing: border-box; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-        <img src="https://www.peaceandlocknj.com/logo.png" alt="Peace & Lock Logo" style="max-width: 100%; max-height: 100%; object-fit: contain; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-        <div style="display: none; font-size: 48px; color: #d97706; font-weight: 700;">🔑</div>
-      </div>
-      <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">Peace & Lock</h1>
-      <p style="margin: 8px 0 0 0; font-size: 16px; opacity: 0.9;">Professional Garage Door Services</p>
-    </div>
+<body style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #ffffff; color: #1a1a1a; line-height: 1.6;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #ffffff;">
+    <tr>
+      <td align="center" style="padding: 40px 20px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" class="container" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden;">
 
-    <!-- Main Content -->
-    <div style="padding: 40px 30px;">
-      <div style="text-align: center; margin-bottom: 30px;">
-        <div style="background: #dcfce7; color: #166534; padding: 12px 24px; border-radius: 50px; display: inline-block; font-weight: 600; font-size: 14px; margin-bottom: 20px;">
-          ✓ REQUEST CONFIRMED
-        </div>
-        <h2 style="color: #1f2937; margin: 0; font-size: 24px; font-weight: 600;">Thank you, ${escapeHtml(data.customerName)}!</h2>
-        <p style="color: #6b7280; margin: 8px 0 0 0;">We've received your service request and our team is on it.</p>
-      </div>
+          <!-- Header -->
+          <tr>
+            <td class="header" style="background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%); padding: 40px 30px; text-align: center;">
+              <h1 style="margin: 0; font-size: 36px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">Peace & Lock</h1>
+              <p style="margin: 12px 0 0 0; font-size: 18px; color: rgba(255,255,255,0.9); font-weight: 500;">Professional Garage Door Services</p>
+            </td>
+          </tr>
 
-      <!-- Service Details Card -->
-      <div class="info-card border-color" style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin: 24px 0;">
-        <div style="display: flex; align-items: center; margin-bottom: 16px;">
-          <div style="background: #d97706; color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
-            <span style="font-size: 16px; font-weight: 600;">📝</span>
-          </div>
-          <h3 class="text-muted" style="margin: 0; font-size: 18px; font-weight: 600; color: #1f2937;">Service Request Details</h3>
-        </div>
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500;">Service Type:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.serviceType)}</td></tr>
-          <tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500;">Urgency Level:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.urgency.charAt(0).toUpperCase() + data.urgency.slice(1))}</td></tr>
-          <tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500;">Phone:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.phone)}</td></tr>
-          <tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500;">Address:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.address)}</td></tr>
-          <tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500;">Submitted:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${data.submittedAt}</td></tr>
-          ${data.description ? `<tr><td style="padding: 8px 0; color: #6b7280; font-weight: 500; vertical-align: top;">Description:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.description)}</td></tr>` : ''}
+          <!-- Main Content -->
+          <tr>
+            <td class="content" style="padding: 40px 30px; background-color: #ffffff;">
+
+              <!-- Success Badge -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td align="center" style="padding-bottom: 30px;">
+                    <div style="background-color: #16a34a; color: #ffffff; padding: 12px 24px; border-radius: 6px; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">
+                      ✓ Request Confirmed
+                    </div>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Welcome Message -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td align="center" style="padding-bottom: 40px;">
+                    <h2 style="margin: 0 0 12px 0; font-size: 28px; font-weight: 700; color: #1a1a1a;">Thank you, ${escapeHtml(data.customerName)}!</h2>
+                    <p style="margin: 0; font-size: 16px; color: #666666; line-height: 1.5;">We've received your service request and our professional team will contact you shortly.</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Service Details -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa; border-radius: 8px; border: 2px solid #e9ecef; margin-bottom: 30px;">
+                <tr>
+                  <td style="padding: 30px;">
+                    <h3 style="margin: 0 0 20px 0; font-size: 20px; font-weight: 600; color: #1a1a1a;">Service Request Details</h3>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="padding: 8px 0; font-weight: 500; color: #666666; width: 40%;">Service Type:</td>
+                        <td style="padding: 8px 0; font-weight: 600; color: #1a1a1a;">${escapeHtml(data.serviceType)}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; font-weight: 500; color: #666666;">Urgency Level:</td>
+                        <td style="padding: 8px 0; font-weight: 600; color: #1a1a1a;">${escapeHtml(data.urgency.charAt(0).toUpperCase() + data.urgency.slice(1))}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; font-weight: 500; color: #666666;">Phone:</td>
+                        <td style="padding: 8px 0; font-weight: 600; color: #1a1a1a;">${escapeHtml(data.phone)}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; font-weight: 500; color: #666666;">Address:</td>
+                        <td style="padding: 8px 0; font-weight: 600; color: #1a1a1a;">${escapeHtml(data.address)}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; font-weight: 500; color: #666666;">Submitted:</td>
+                        <td style="padding: 8px 0; font-weight: 600; color: #1a1a1a;">${data.submittedAt}</td>
+                      </tr>
+                      ${data.description ? `<tr><td style="padding: 8px 0; font-weight: 500; color: #666666; vertical-align: top;">Description:</td><td style="padding: 8px 0; font-weight: 600; color: #1a1a1a;">${escapeHtml(data.description)}</td></tr>` : ''}
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Next Steps -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 8px; border: 2px solid #16a34a; margin-bottom: 30px;">
+                <tr>
+                  <td style="padding: 30px;">
+                    <h3 style="margin: 0 0 20px 0; font-size: 20px; font-weight: 600; color: #16a34a;">What Happens Next?</h3>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="padding: 8px 0; vertical-align: top; width: 24px;">
+                          <span style="color: #16a34a; font-size: 16px; font-weight: 700;">✓</span>
+                        </td>
+                        <td style="padding: 8px 0 8px 12px; color: #1a1a1a; font-weight: 500;">
+                          Our team will review your request within 30 minutes
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; vertical-align: top; width: 24px;">
+                          <span style="color: #16a34a; font-size: 16px; font-weight: 700;">✓</span>
+                        </td>
+                        <td style="padding: 8px 0 8px 12px; color: #1a1a1a; font-weight: 500;">
+                          We'll call you to schedule a convenient appointment time
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; vertical-align: top; width: 24px;">
+                          <span style="color: #16a34a; font-size: 16px; font-weight: 700;">✓</span>
+                        </td>
+                        <td style="padding: 8px 0 8px 12px; color: #1a1a1a; font-weight: 500;">
+                          Our licensed technician will provide professional service
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Contact Information -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #ffffff; border-radius: 8px; border: 3px solid #d97706; margin-bottom: 30px;">
+                <tr>
+                  <td style="padding: 30px; text-align: center;">
+                    <h3 style="margin: 0 0 20px 0; font-size: 20px; font-weight: 600; color: #d97706;">Need Immediate Assistance?</h3>
+                    <div style="background-color: #d97706; color: #ffffff; padding: 20px; border-radius: 8px; margin: 0 auto; max-width: 300px;">
+                      <p style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">(201) 431-3480</p>
+                    </div>
+                    <p style="margin: 16px 0 0 0; color: #666666; font-weight: 500; font-size: 16px;">Available 24/7 for emergency services</p>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #1a1a1a; color: #e5e5e5; padding: 30px; text-align: center;">
+              <h4 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 700; color: #ffffff;">Peace & Lock</h4>
+              <p style="margin: 0 0 4px 0; font-size: 14px; opacity: 0.8;">NJ License #13VH13566900</p>
+              <p style="margin: 0; font-size: 14px; opacity: 0.8;">Professional • Licensed • Insured</p>
+            </td>
+          </tr>
+
         </table>
-      </div>
-
-      <!-- Next Steps -->
-      <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1px solid #a7f3d0; border-radius: 12px; padding: 24px; margin: 24px 0;">
-        <div style="display: flex; align-items: center; margin-bottom: 16px;">
-          <div style="background: #059669; color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
-            <span style="font-size: 16px;">📋</span>
-          </div>
-          <h3 style="color: #059669; margin: 0; font-size: 18px; font-weight: 600;">What Happens Next?</h3>
-        </div>
-        <ul style="margin: 0; padding-left: 0; list-style: none;">
-          <li style="padding: 8px 0; display: flex; align-items: center;"><span style="color: #059669; margin-right: 12px; font-size: 16px;">✓</span>Our team will review your request within 30 minutes</li>
-          <li style="padding: 8px 0; display: flex; align-items: center;"><span style="color: #059669; margin-right: 12px; font-size: 16px;">✓</span>We'll call you to schedule a convenient appointment time</li>
-          <li style="padding: 8px 0; display: flex; align-items: center;"><span style="color: #059669; margin-right: 12px; font-size: 16px;">✓</span>Our licensed technician will provide professional service</li>
-        </ul>
-      </div>
-
-      <!-- Contact Information -->
-      <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #93c5fd; border-radius: 12px; padding: 24px; text-align: center; margin: 24px 0;">
-        <h3 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 600; color: #1e40af;">Need to reach us immediately?</h3>
-        <div style="background: #1e40af; color: white; padding: 16px; border-radius: 8px; margin: 16px 0;">
-          <p style="font-size: 28px; font-weight: 700; margin: 0; letter-spacing: -0.5px;">(201) 431-3480</p>
-        </div>
-        <p style="margin: 0; color: #1e40af; font-weight: 500;">Available 24/7 for emergency services</p>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <div style="background: #1f2937; color: #e5e7eb; padding: 24px; text-align: center;">
-      <p style="margin: 0; font-weight: 600; font-size: 16px;">Peace & Lock</p>
-      <p style="margin: 4px 0 0 0; opacity: 0.8; font-size: 14px;">NJ License #13VH13566900</p>
-      <p style="margin: 8px 0 0 0; opacity: 0.8; font-size: 14px;">Professional • Licensed • Insured</p>
-    </div>
-  </div>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>`;
 }
@@ -191,9 +253,9 @@ function getCustomerTemplate(data: { customerName: string; serviceType: string; 
 // Team notification template
 function getTeamTemplate(data: { customerName: string; email: string; phone: string; serviceType: string; urgency: string; address: string; description?: string; submittedAt: string; userAgent?: string; ipAddress?: string; referrer?: string; }) {
   const urgencyConfig = {
-    emergency: { color: '#dc2626', bgColor: '#fee2e2', borderColor: '#fca5a5', icon: '🚨' },
-    urgent: { color: '#ea580c', bgColor: '#fed7aa', borderColor: '#fdba74', icon: '⚡' },
-    normal: { color: '#059669', bgColor: '#d1fae5', borderColor: '#a7f3d0', icon: '📝' }
+    emergency: { color: '#dc2626', bgColor: '#fef2f2', borderColor: '#dc2626', label: 'EMERGENCY' },
+    urgent: { color: '#d97706', bgColor: '#fffbeb', borderColor: '#d97706', label: 'URGENT' },
+    normal: { color: '#16a34a', bgColor: '#f0fdf4', borderColor: '#16a34a', label: 'NORMAL' }
   };
   const config = urgencyConfig[data.urgency as keyof typeof urgencyConfig] || urgencyConfig.normal;
 
@@ -203,88 +265,141 @@ function getTeamTemplate(data: { customerName: string; email: string; phone: str
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
-  <meta name="supported-color-schemes" content="light dark">
-  <title>New Service Request Alert</title>
+  <meta name="x-apple-disable-message-reformatting">
+  <title>New Service Request - Team Alert</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-    /* Dark mode support for team notifications */
-    @media (prefers-color-scheme: dark) {
-      .email-container { background: #1f2937 !important; color: #f9fafb !important; }
-      .content-card { background: #374151 !important; color: #f9fafb !important; }
-      .text-muted { color: #9ca3af !important; }
-      .border-color { border-color: #4b5563 !important; }
-      .info-card { background: #4b5563 !important; border-color: #6b7280 !important; }
-      .action-card { background: #1e3a8a !important; border-color: #3b82f6 !important; }
-      .session-card { background: #4b5563 !important; border-color: #6b7280 !important; }
-      .footer { background: #111827 !important; }
+    /* Reset styles */
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; }
+    table { border-collapse: collapse; }
+
+    /* Responsive styles */
+    @media only screen and (max-width: 600px) {
+      .container { width: 100% !important; }
+      .content { padding: 20px !important; }
+      .header { padding: 30px 20px !important; }
     }
   </style>
 </head>
-<body class="email-container" style="font-family: 'Space Grotesk', Arial, sans-serif; line-height: 1.6; color: #1f2937; margin: 0; padding: 20px; background: #f9fafb;">
-  <div style="max-width: 700px; margin: 0 auto; background: #ffffff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
-    <!-- Alert Header -->
-    <div style="background: linear-gradient(135deg, ${config.color} 0%, #7f1d1d 100%); color: white; padding: 30px; text-align: center; position: relative;">
-      <div style="background: rgba(255,255,255,0.1); padding: 12px 24px; border-radius: 50px; font-weight: 700; margin-bottom: 16px; display: inline-block; font-size: 14px; letter-spacing: 0.5px;">
-        ${config.icon} NEW SERVICE REQUEST
-      </div>
-      <h1 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">Peace & Lock Team Alert</h1>
-      <p style="margin: 8px 0 0 0; opacity: 0.9;">Immediate action required</p>
-    </div>
+<body style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #ffffff; color: #1a1a1a; line-height: 1.6;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #ffffff;">
+    <tr>
+      <td align="center" style="padding: 40px 20px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="700" class="container" style="max-width: 700px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden;">
 
-    <!-- Priority Banner -->
-    <div style="background: ${config.bgColor}; color: ${config.color}; padding: 20px; text-align: center; font-weight: 700; font-size: 18px; border: 2px solid ${config.borderColor}; margin: 0;">
-      ${config.icon} ${escapeHtml(data.urgency.toUpperCase())} PRIORITY REQUEST ${config.icon}
-    </div>
+          <!-- Header -->
+          <tr>
+            <td class="header" style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); padding: 40px 30px; text-align: center;">
+              <div style="background-color: rgba(255,255,255,0.15); color: #ffffff; padding: 12px 24px; border-radius: 6px; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 16px;">
+                🚨 NEW SERVICE REQUEST
+              </div>
+              <h1 style="margin: 0; font-size: 32px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">Peace & Lock Team Alert</h1>
+              <p style="margin: 12px 0 0 0; font-size: 16px; color: rgba(255,255,255,0.9); font-weight: 500;">Immediate action required</p>
+            </td>
+          </tr>
 
-    <div style="padding: 40px 30px;">
-      <!-- Customer Information Card -->
-      <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin: 0 0 24px 0;">
-        <div style="display: flex; align-items: center; margin-bottom: 20px;">
-          <div style="background: #d97706; color: white; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
-            <span style="font-size: 20px;">👤</span>
-          </div>
-          <h3 style="margin: 0; font-size: 20px; font-weight: 600; color: #1f2937;">Customer Information</h3>
-        </div>
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500; width: 120px;">Name:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 600; font-size: 16px;">${escapeHtml(data.customerName)}</td></tr>
-          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500;">Phone:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 700; font-size: 18px;"><a href="tel:${escapeHtml(data.phone)}" style="color: #dc2626; text-decoration: none;">${escapeHtml(data.phone)}</a></td></tr>
-          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500;">Email:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 600;"><a href="mailto:${escapeHtml(data.email)}" style="color: #1e40af; text-decoration: none;">${escapeHtml(data.email)}</a></td></tr>
-          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500;">Service:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 700; font-size: 16px;">${escapeHtml(data.serviceType)}</td></tr>
-          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500;">Address:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 600;">${escapeHtml(data.address)}</td></tr>
-          <tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500;">Submitted:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 600;">${data.submittedAt}</td></tr>
-          ${data.description ? `<tr><td style="padding: 10px 0; color: #6b7280; font-weight: 500; vertical-align: top;">Description:</td><td style="padding: 10px 0; color: #1f2937; font-weight: 600; background: #f1f5f9; padding: 12px; border-radius: 6px; border-left: 3px solid #3b82f6;">${escapeHtml(data.description)}</td></tr>` : ''}
+          <!-- Priority Banner -->
+          <tr>
+            <td style="background-color: ${config.bgColor}; color: ${config.color}; padding: 20px; text-align: center; font-weight: 700; font-size: 18px; border-top: 4px solid ${config.borderColor}; border-bottom: 4px solid ${config.borderColor};">
+              🚨 ${config.label} PRIORITY REQUEST 🚨
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td class="content" style="padding: 40px 30px; background-color: #ffffff;">
+
+              <!-- Customer Information -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa; border-radius: 8px; border: 2px solid #e9ecef; margin-bottom: 30px;">
+                <tr>
+                  <td style="padding: 30px;">
+                    <h3 style="margin: 0 0 20px 0; font-size: 20px; font-weight: 600; color: #1a1a1a;">Customer Information</h3>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="padding: 8px 0; font-weight: 500; color: #666666; width: 25%;">Name:</td>
+                        <td style="padding: 8px 0; font-weight: 700; color: #1a1a1a; font-size: 16px;">${escapeHtml(data.customerName)}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; font-weight: 500; color: #666666;">Phone:</td>
+                        <td style="padding: 8px 0;">
+                          <a href="tel:${escapeHtml(data.phone)}" style="color: #dc2626; text-decoration: none; font-weight: 700; font-size: 18px;">${escapeHtml(data.phone)}</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; font-weight: 500; color: #666666;">Email:</td>
+                        <td style="padding: 8px 0;">
+                          <a href="mailto:${escapeHtml(data.email)}" style="color: #1e40af; text-decoration: none; font-weight: 600;">${escapeHtml(data.email)}</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; font-weight: 500; color: #666666;">Service:</td>
+                        <td style="padding: 8px 0; font-weight: 700; color: #1a1a1a; font-size: 16px;">${escapeHtml(data.serviceType)}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; font-weight: 500; color: #666666;">Address:</td>
+                        <td style="padding: 8px 0; font-weight: 600; color: #1a1a1a;">${escapeHtml(data.address)}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; font-weight: 500; color: #666666;">Submitted:</td>
+                        <td style="padding: 8px 0; font-weight: 600; color: #1a1a1a;">${data.submittedAt}</td>
+                      </tr>
+                      ${data.description ? `<tr><td style="padding: 12px 0 8px 0; font-weight: 500; color: #666666; vertical-align: top;">Description:</td><td style="padding: 12px 0 8px 0;"><div style="background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 6px; padding: 12px; color: #1a1a1a; font-weight: 500;">${escapeHtml(data.description)}</div></td></tr>` : ''}
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Action Buttons -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 30px;">
+                <tr>
+                  <td align="center" style="padding: 30px; background-color: #f8f9fa; border-radius: 8px; border: 2px solid #16a34a;">
+                    <h3 style="margin: 0 0 20px 0; color: #16a34a; font-size: 20px; font-weight: 600;">Quick Actions</h3>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="padding: 0 8px;">
+                          <a href="tel:${escapeHtml(data.phone)}" style="display: inline-block; padding: 16px 32px; background-color: #dc2626; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 16px;">📞 Call Customer</a>
+                        </td>
+                        <td style="padding: 0 8px;">
+                          <a href="mailto:${escapeHtml(data.email)}" style="display: inline-block; padding: 16px 32px; background-color: #1e40af; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 16px;">✉️ Email Customer</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Session Information -->
+              ${data.userAgent || data.ipAddress || data.referrer ? `
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef; margin-bottom: 30px;">
+                <tr>
+                  <td style="padding: 30px;">
+                    <h3 style="margin: 0 0 16px 0; color: #666666; font-size: 16px; font-weight: 600;">🌐 Session Information</h3>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px;">
+                      ${data.ipAddress ? `<tr><td style="padding: 6px 0; color: #666666; font-weight: 500; width: 25%;">IP Address:</td><td style="padding: 6px 0; color: #1a1a1a; font-family: 'Courier New', monospace;">${escapeHtml(data.ipAddress)}</td></tr>` : ''}
+                      ${data.userAgent ? `<tr><td style="padding: 6px 0; color: #666666; font-weight: 500; vertical-align: top;">User Agent:</td><td style="padding: 6px 0; color: #1a1a1a; font-family: 'Courier New', monospace; word-break: break-all; font-size: 12px;">${escapeHtml(data.userAgent)}</td></tr>` : ''}
+                      ${data.referrer ? `<tr><td style="padding: 6px 0; color: #666666; font-weight: 500;">Referrer:</td><td style="padding: 6px 0; color: #1a1a1a; font-family: 'Courier New', monospace; font-size: 12px;">${escapeHtml(data.referrer)}</td></tr>` : ''}
+                    </table>
+                  </td>
+                </tr>
+              </table>` : ''}
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #1a1a1a; color: #e5e5e5; padding: 30px; text-align: center;">
+              <h4 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 700; color: #ffffff;">Peace & Lock Team Dashboard</h4>
+              <p style="margin: 0; font-size: 14px; opacity: 0.8;">This is an automated notification • Respond promptly</p>
+            </td>
+          </tr>
+
         </table>
-      </div>
-
-      <!-- Action Buttons -->
-      <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #93c5fd; border-radius: 12px; padding: 24px; text-align: center; margin: 24px 0;">
-        <h3 style="margin: 0 0 20px 0; color: #1e40af; font-size: 18px; font-weight: 600;">Quick Actions</h3>
-        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-          <a href="tel:${escapeHtml(data.phone)}" style="display: inline-block; padding: 14px 28px; background: #dc2626; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);">📞 Call Customer</a>
-          <a href="mailto:${escapeHtml(data.email)}" style="display: inline-block; padding: 14px 28px; background: #1e40af; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 2px 4px rgba(30, 64, 175, 0.2);">✉️ Email Customer</a>
-        </div>
-      </div>
-
-      <!-- Session Information -->
-      ${data.userAgent || data.ipAddress || data.referrer ? `
-      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 24px 0;">
-        <h3 style="margin: 0 0 16px 0; color: #6b7280; font-size: 16px; font-weight: 600;">🌐 Session Information</h3>
-        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-          ${data.ipAddress ? `<tr><td style="padding: 6px 0; color: #6b7280; font-weight: 500;">IP Address:</td><td style="padding: 6px 0; color: #1f2937; font-family: monospace;">${escapeHtml(data.ipAddress)}</td></tr>` : ''}
-          ${data.userAgent ? `<tr><td style="padding: 6px 0; color: #6b7280; font-weight: 500; vertical-align: top;">User Agent:</td><td style="padding: 6px 0; color: #1f2937; font-family: monospace; word-break: break-all;">${escapeHtml(data.userAgent)}</td></tr>` : ''}
-          ${data.referrer ? `<tr><td style="padding: 6px 0; color: #6b7280; font-weight: 500;">Referrer:</td><td style="padding: 6px 0; color: #1f2937; font-family: monospace;">${escapeHtml(data.referrer)}</td></tr>` : ''}
-        </table>
-      </div>` : ''}
-    </div>
-
-    <!-- Footer -->
-    <div style="background: #1f2937; color: #e5e7eb; padding: 20px; text-align: center;">
-      <p style="margin: 0; font-weight: 600;">Peace & Lock Team Dashboard</p>
-      <p style="margin: 4px 0 0 0; opacity: 0.8; font-size: 14px;">This is an automated notification • Respond promptly</p>
-    </div>
-  </div>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>`;
 }
