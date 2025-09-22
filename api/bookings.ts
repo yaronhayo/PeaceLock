@@ -216,7 +216,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         emailPromises.push(
           sendEmail({
             to: req.body.email,
-            from: 'noreply@peaceandlockgarage.com',
+            from: 'gettmarketing101@gmail.com', // Use verified sender
             subject: 'Service Request Confirmation - Peace & Lock',
             html: getCustomerTemplate(emailData)
           })
@@ -228,8 +228,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       emailPromises.push(
         sendEmail({
           to: 'gettmarketing101@gmail.com',
-          from: 'team@peaceandlockgarage.com',
-          replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'noreply@peaceandlockgarage.com',
+          from: 'gettmarketing101@gmail.com', // Use verified sender
+          replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'gettmarketing101@gmail.com',
           subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
           html: getTeamTemplate(emailData)
         })
