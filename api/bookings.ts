@@ -240,7 +240,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           sendEmail({
             to: req.body.email,
             from: {
-              email: 'gettmarketing101@gmail.com',
+              email: 'noreply@em6046.peaceandlocknj.com',
               name: 'Peace & Lock'
             },
             subject: 'Service Request Confirmation - Peace & Lock',
@@ -255,10 +255,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         sendEmail({
           to: 'gettmarketing101@gmail.com',
           from: {
-            email: 'gettmarketing101@gmail.com',
+            email: 'noreply@em6046.peaceandlocknj.com',
             name: 'Peace & Lock'
           },
-          replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'gettmarketing101@gmail.com',
+          replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'noreply@em6046.peaceandlocknj.com',
           subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
           html: getTeamTemplate(emailData)
         })
