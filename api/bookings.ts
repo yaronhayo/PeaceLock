@@ -58,13 +58,21 @@ async function sendEmail(params: {
       replyTo: params.replyTo
     });
 
-    const result = await mailService.send({
+    // Add explicit timeout to catch hanging calls
+    const sendPromise = mailService.send({
       to: params.to,
       from: params.from,
       subject: params.subject,
       html: params.html,
       replyTo: params.replyTo
     });
+
+    // Race between send and timeout
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('SendGrid API call timeout after 8 seconds')), 8000);
+    });
+
+    const result = await Promise.race([sendPromise, timeoutPromise]);
 
     console.log('✅ SendGrid SUCCESS:', {
       statusCode: result[0]?.statusCode,
@@ -231,10 +239,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         emailPromises.push(
           sendEmail({
             to: req.body.email,
-            from: {
-              email: 'noreply@em2836.peaceandlocknj.com',
-              name: 'Peace & Lock'
-            },
+            from: 'noreply@em2836.peaceandlocknj.com', // Simplified sender format
             subject: 'Service Request Confirmation - Peace & Lock',
             html: getCustomerTemplate(emailData)
           })
@@ -246,10 +251,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       emailPromises.push(
         sendEmail({
           to: 'gettmarketing101@gmail.com',
-          from: {
-            email: 'noreply@em2836.peaceandlocknj.com',
-            name: 'Peace & Lock'
-          },
+          from: 'noreply@em2836.peaceandlocknj.com', // Simplified sender format
           replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'noreply@em2836.peaceandlocknj.com',
           subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
           html: getTeamTemplate(emailData)
