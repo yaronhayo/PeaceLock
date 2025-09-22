@@ -102,8 +102,8 @@ function getCustomerTemplate(data: { customerName: string; serviceType: string; 
   <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
     <!-- Header -->
     <div style="background: linear-gradient(135deg, #d97706 0%, #ea580c 100%); color: white; padding: 40px 30px; text-align: center; position: relative;">
-      <div style="background: rgba(255,255,255,0.1); width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
-        <span style="font-size: 32px; font-weight: 700;">🔒</span>
+      <div style="background: rgba(255,255,255,0.9); width: 120px; height: 120px; border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box;">
+        <img src="https://peaceandlocknj.com/logo.png" alt="Peace & Lock Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
       </div>
       <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">Peace & Lock</h1>
       <p style="margin: 8px 0 0 0; font-size: 16px; opacity: 0.9;">Professional Garage Door Services</p>
