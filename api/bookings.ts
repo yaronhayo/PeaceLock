@@ -24,7 +24,7 @@ function escapeHtml(text: string): string {
 // Send email function
 async function sendEmail(params: {
   to: string;
-  from: string;
+  from: string | { email: string; name: string };
   subject: string;
   html: string;
   replyTo?: string;
@@ -216,7 +216,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         emailPromises.push(
           sendEmail({
             to: req.body.email,
-            from: 'gettmarketing101@gmail.com', // Use verified sender
+            from: {
+              email: 'noreply@peaceandlocknj.com',
+              name: 'Peace & Lock'
+            },
             subject: 'Service Request Confirmation - Peace & Lock',
             html: getCustomerTemplate(emailData)
           })
@@ -228,8 +231,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       emailPromises.push(
         sendEmail({
           to: 'gettmarketing101@gmail.com',
-          from: 'gettmarketing101@gmail.com', // Use verified sender
-          replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'gettmarketing101@gmail.com',
+          from: {
+            email: 'noreply@peaceandlocknj.com',
+            name: 'Peace & Lock'
+          },
+          replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'noreply@peaceandlocknj.com',
           subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
           html: getTeamTemplate(emailData)
         })
