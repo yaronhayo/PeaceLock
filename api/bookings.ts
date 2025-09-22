@@ -29,23 +29,43 @@ async function sendEmail(params: {
   html: string;
   replyTo?: string;
 }): Promise<boolean> {
+  console.log('SendEmail called with:', {
+    to: params.to,
+    from: params.from,
+    subject: params.subject,
+    hasApiKey: !!process.env.SENDGRID_API_KEY,
+    nodeEnv: process.env.NODE_ENV
+  });
+
   if (isDevelopment && !process.env.SENDGRID_API_KEY) {
     console.log('Development mode: Email would be sent to:', params.to);
     console.log('Subject:', params.subject);
     return true;
   }
 
+  if (!process.env.SENDGRID_API_KEY) {
+    console.error('SENDGRID_API_KEY not found in environment variables');
+    return false;
+  }
+
   try {
-    await mailService.send({
+    console.log('Attempting to send email via SendGrid...');
+    const result = await mailService.send({
       to: params.to,
       from: params.from,
       subject: params.subject,
       html: params.html,
       replyTo: params.replyTo
     });
+    console.log('SendGrid send result:', result);
     return true;
   } catch (error: any) {
-    console.error('SendGrid email error:', error.message);
+    console.error('SendGrid email error:', {
+      message: error.message,
+      code: error.code,
+      response: error.response?.body,
+      stack: error.stack
+    });
     return false;
   }
 }
@@ -207,7 +227,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log('Sending team notification');
       emailPromises.push(
         sendEmail({
-          to: 'peaceandlockgarage@gmail.com',
+          to: 'gettmarketing101@gmail.com',
           from: 'team@peaceandlockgarage.com',
           replyTo: req.body.email && req.body.email.trim() ? req.body.email : 'noreply@peaceandlockgarage.com',
           subject: `NEW ${(req.body.urgency || 'NORMAL').toUpperCase()} PRIORITY REQUEST - ${serviceType}`,
